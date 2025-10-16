@@ -1,0 +1,177 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f6fb;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 15px 40px;
+  border-bottom: 2px solid #ddd;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 35px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-weight: bold;
+  font-size: 22px;
+  color: #0056b3;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.contact-number {
+  font-weight: bold;
+  color: green;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  background: url('background.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+
+.left-section {
+  width: 35%;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 0;
+  display: block;
+}
+
+.left-text {
+  background-color: white;
+  border-radius: 0 0 10px 10px;
+  padding: 10px 15px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-top: -4px; 
+}
+
+.left-text h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.left-text p {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+}
+
+.form-section {
+  background-color: white;
+  padding: 30px;
+  width: 50%;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  border-bottom: 2px solid #00aaff;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group select {
+  width: 48%;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.dob-gender {
+  display: flex;
+  flex-direction: column;
+}
+
+.dob-gender label {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.dob-gender select {
+  width: 32%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.gender {
+  margin: 15px 0;
+  color: #333;
+}
+
+.gender label {
+  margin-right: 15px;
+}
+
+.signup-btn {
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.signin-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.signin-link a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+

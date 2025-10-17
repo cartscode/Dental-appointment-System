@@ -86,6 +86,26 @@ header {
 .btn:hover {
   background: #0288d1;
 }
+/* Elegant Button Style */
+.btn.login-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* stylish gradient */
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn.login-btn:hover {
+  background: linear-gradient(135deg, #2575fc, #6a11cb); /* gradient swap */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
 
 /* ===== Hero Section ===== */
 .hero {

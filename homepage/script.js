@@ -1,11 +1,7 @@
+const hamburger = document.getElementById("hamburger");
+const navbar = document.querySelector(".navbar");
 
-//  For hamburger nav bar
- const toggle = document.getElementById('menu-toggle');
-  const navLinks = document.getElementById('nav-links');
-  const navRight = document.querySelector('.nav-right');
-
-  toggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    navRight.classList.toggle('active');
-  });
-
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("open");
+  navbar.classList.toggle("active");
+});

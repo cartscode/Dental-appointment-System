@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dental+ | Book Appointment</title>
-    <link rel="stylesheet" href="homestyle.css"> 
     <link rel="icon" type="image/png" href="src/tooth.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="AppointmentsBooking.css"> 
@@ -86,12 +85,12 @@
                     <h2>Select a Date & Time</h2>
                     
                     <div class="calendar-header">
-                        <i class="fas fa-chevron-left"></i>
-                        <div class="month-year">OCTOBER 2025</div>
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-chevron-left" id="prev-month"></i>
+                        <div class="month-year" id="month-year-display">OCTOBER 2025</div>
+                        <i class="fas fa-chevron-right" id="next-month"></i>
                     </div>
 
-                    <div class="calendar-grid">
+                    <div class="calendar-grid" id="calendar-grid">
                         <div class="day-name">SUN</div>
                         <div class="day-name">MON</div>
                         <div class="day-name">TUE</div>
@@ -100,44 +99,6 @@
                         <div class="day-name">FRI</div>
                         <div class="day-name">SAT</div>
 
-                        <div class="day empty"></div>
-                        <div class="day empty"></div>
-                        <div class="day">1</div>
-                        <div class="day">2</div>
-                        <div class="day">3</div>
-                        <div class="day">4</div>
-                        <div class="day">5</div>
-                        
-                        <div class="day">6</div>
-                        <div class="day">7</div>
-                        <div class="day">8</div>
-                        <div class="day">9</div>
-                        <div class="day">10</div>
-                        <div class="day">11</div>
-                        <div class="day">12</div>
-                        
-                        <div class="day">13</div>
-                        <div class="day">14</div>
-                        <div class="day current-day active-day">15</div> <div class="day">16</div>
-                        <div class="day">17</div>
-                        <div class="day">18</div>
-                        <div class="day">19</div>
-                        
-                        <div class="day">20</div>
-                        <div class="day">21</div>
-                        <div class="day">22</div>
-                        <div class="day">23</div>
-                        <div class="day">24</div>
-                        <div class="day">25</div>
-                        <div class="day">26</div>
-                        
-                        <div class="day">27</div>
-                        <div class="day">28</div>
-                        <div class="day">29</div>
-                        <div class="day">30</div>
-                        <div class="day">31</div>
-                        <div class="day empty"></div>
-                        <div class="day empty"></div>
                     </div>
                     
                     <div class="time-slots">

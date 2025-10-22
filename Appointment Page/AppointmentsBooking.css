@@ -483,3 +483,13 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+.day.disabled-day {
+    color: #999; /* Faded out */
+    background-color: rgba(255, 255, 255, 0.03); /* Slightly different background */
+    cursor: not-allowed !important;
+}
+
+.day.disabled-day:hover {
+    background-color: rgba(255, 255, 255, 0.03); /* Prevent hover effect on disabled dates */
+}

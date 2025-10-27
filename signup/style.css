@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,14 +9,27 @@
 body {
   background-color: #f4f6fb;
 }
+/* ===== Navbar ===== */
+
+header,
+footer {
+  width: 100%;
+}
+
 
 header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  padding: 15px 40px;
-  border-bottom: 2px solid #ddd;
+  padding: 15px 60px;
 }
 
 .logo {
@@ -24,22 +38,113 @@ header {
 }
 
 .logo img {
-  width: 35px;
+  width: 45px;
   margin-right: 10px;
 }
 
-.logo span {
-  font-weight: bold;
-  font-size: 22px;
-  color: #0056b3;
+.logo h2 {
+  color: #0d47a1;
 }
 
-nav a {
-  margin: 0 15px;
+.logo span {
+  color: #00bcd4;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  transition: 0.3s;
 }
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: #00bcd4;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.phone {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.phone i {
+  color: #00bcd4;
+  margin-right: 6px;
+}
+
+.btn {
+  background: #00bcd4;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #0288d1;
+}
+
+/* ===== Responsive Navbar ===== */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  color: #0d47a1;
+}
+
+/* Show hamburger and hide menu on small screens */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 100%;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.active,
+  .nav-right.active {
+    display: flex;
+    padding: 20px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar {
+    position: relative;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 
 .contact-number {
   font-weight: bold;
@@ -173,5 +278,100 @@ nav a {
   color: #007BFF;
   text-decoration: none;
 }
+/* ===============================
+   MOBILE RESPONSIVE DESIGN
+   =============================== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+@media (max-width: 768px) {
+  .left-section {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .left-text h2 {
+    font-size: 1.3rem;
+  }
+
+  .left-text p {
+    font-size: 0.95rem;
+  }
+}
 
 
+  /* Layout */
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .left-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .left-section img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .form-section {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .form-group {
+    flex-direction: column;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .gender {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .signup-btn {
+    width: 100%;
+  }
+
+  .signin-link {
+    text-align: center;
+  }
+}
+
+/* Even smaller devices */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo h2 {
+    font-size: 20px;
+  }
+
+  .form-section h2 {
+    font-size: 22px;
+  }
+
+  .left-text h2 {
+    font-size: 18px;
+  }
+
+  .left-text p {
+    font-size: 14px;
+  }
+}

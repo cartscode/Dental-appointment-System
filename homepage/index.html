@@ -5,44 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dental+</title>
   <link rel="stylesheet" href="homestyle.css">
+  <link rel="icon" type="image/png" href="src/tooth.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <!-- Navbar -->
-<header>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="src/dentist.gif" alt="Logo">
-      <h2>Dental<span>+</span></h2>
-    </div>
-    <!-- Hamburger Button -->
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Contact Us</a></li>
-    </ul>
 
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="src/dentist.gif" alt="Logo">
+        <h2>Dental<span>+</span></h2>
+      </div>
 
-    <div class="nav-right">
-      <a href="tel:+1234567891" class="phone"><i class="fa-solid fa-phone"></i> 1234-567-891</a>
-      <a href="#" class="btn">Book Appointment</a>
-    </div>
-  </nav>
-</header>
+      <div class="menu-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
 
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/homepage/index.html" class="active">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
 
-  <!-- Hero Section -->
+      <div class="nav-right">
+        <a href="tel:+1234567891" class="phone">
+          <i class="fa-solid fa-phone"></i> 1234-567-891
+        </a>
+        <a href="#" class="btnbookapp">Book Appointment</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== Hero Section ===== -->
   <section class="hero">
     <div class="hero-content">
       <h1>Book your<br>Appointment now!</h1>
       <p>Our dental clinic offers services to help you become<br>confident in your smile.</p>
-  <a href="\Project in IS104\Login\login.html" class="btn login-btn">LOG IN</a>
+      <a href="\Project in IS104\Login\login.html" class="login-btn">LOG IN</a>
 
       <div class="socials">
         <div class="icons">
@@ -59,7 +60,7 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
+  <!-- ===== Testimonials ===== -->
   <section class="testimonials">
     <h2>What Our Patients Say</h2>
     <div class="testimonial-container">
@@ -105,12 +106,11 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ===== Footer ===== -->
   <footer>
     <div class="footer-container">
       <div class="footer-about">
         <h3>Dental<span>+</span></h3>
-        
         <p>Your trusted dental partner for a healthy, confident smile.</p>
       </div>
 
@@ -125,6 +125,7 @@
     </div>
     <p class="footer-bottom">© 2025 Dental+. All Rights Reserved.</p>
   </footer>
-<script src="script.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>

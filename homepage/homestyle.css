@@ -4,14 +4,6 @@ body {
   background: linear-gradient(135deg, #003366, #0077b6);
   color: white;
 }
-/* ===== NAVBAR BASE ===== */
-header {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
 /* ===== NAVBAR ===== */
 header {
   background: #fff;
@@ -84,7 +76,7 @@ header {
   margin-right: 6px;
 }
 
-.btnbookapp {
+.btn {
   background: #00bcd4;
   color: white;
   padding: 8px 18px;
@@ -93,7 +85,7 @@ header {
   transition: 0.3s;
 }
 
-.btnbookapp:hover {
+.btn:hover {
   background: #0288d1;
 }
 
@@ -139,7 +131,6 @@ header {
     gap: 10px;
   }
 }
-
 /* ===== Hero Section ===== */
 .hero {
   display: flex;
@@ -195,6 +186,7 @@ header {
 .hero-img img {
   width: 360px;
 }
+
 
 /* ===== Testimonials ===== */
 .testimonials {
@@ -255,6 +247,7 @@ header {
   font-weight: 600;
   text-align: right;
 }
+
 /* ===== Footer ===== */
 footer {
   background: #00264d;
@@ -322,37 +315,4 @@ footer {
   border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: 15px;
   margin-top: 20px;
-}
-
-.btn {
-  background: #00bcd4;
-  color: white;
-  padding: 8px 18px;
-  border-radius: 25px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #0288d1;
-}
-/* Elegant Button Style */
-.login-btn {
-  display: inline-block;
-  padding: 12px 30px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* stylish gradient */
-  border: none;
-  border-radius: 30px;
-  text-decoration: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-.login-btn:hover {
-  background: linear-gradient(135deg, #2575fc, #6a11cb); /* gradient swap */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  transform: translateY(-2px);
 }

@@ -12,5 +12,25 @@ Problem statement: (Allen)
 Project Objectives:(Ken)
 Scope and Methodology: (Justine)
 
-
     http://localhost/Project%20in%20IS104/homepage/index.html
+
+________________________________________________________________________________
+Xampp console code
+
+Create Database dentat_db
+
+use database dental_db
+
+CREATE TABLE users (
+  id INT(11) AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  number VARCHAR(20),
+  email VARCHAR(100),
+  emergency VARCHAR(20),
+  username VARCHAR(50),
+  password VARCHAR(255),
+  month VARCHAR(20),
+  day INT(2),
+  year INT(4),
+  gender VARCHAR(10)
+);

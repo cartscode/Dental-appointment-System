@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dental+</title>
+  <link rel="stylesheet" href="services.css">
+  <link rel="icon" type="image/png" href="src/tooth.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="dentist.gif" alt="Logo">
+        <h2>Dental<span>+</span></h2>
+      </div>
+
+      <div class="menu-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="tel:+1234567891" class="phone">
+          <i class="fa-solid fa-phone"></i> 1234-567-891
+        </a>
+        <a href="#" class="btn">Book Appointment</a>
+      </div>
+    </nav>
+  </header>
+
+    <main class="main-content">
+        <div class="container">
+
+            
+            <section class="hero-section">
+                <h1 class="hero-title">
+                    Our Comprehensive Dental Services
+                </h1>
+                <p class="hero-subtitle">
+                    From routine preventive care to advanced restorative and cosmetic treatments, our dedicated team is here to help you achieve a healthy, confident smile for life.
+                </p>
+                <div class="hero-cta">
+                    <a href="#services-list">
+                        Explore All Services
+                    </a>
+                </div>
+            </section>
+
+            <!-- Services Grid -->
+            <section id="services-list" class="services-grid">
+
+                <!-- 1. General & Preventive Care -->
+                <div class="service-card card-primary">
+                    <div class="icon-container icon-primary">
+                        <i data-lucide="tooth" class="w-6 h-6"></i>
+                    </div>
+                    <h2>General & Preventive Care</h2>
+                    <p>
+                        The foundation of good oral health. We focus on regular maintenance and early detection to keep your smile healthy and avoid major issues.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-secondary">•</span> Routine Checkups & Cleanings</li>
+                        <li><span class="bullet-secondary">•</span> Digital X-rays & Oral Cancer Screenings</li>
+                        <li><span class="bullet-secondary">•</span> Fluoride Treatments & Sealants</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Cosmetic Dentistry -->
+                <div class="service-card card-secondary">
+                    <div class="icon-container icon-secondary">
+                        <i data-lucide="star" class="w-6 h-6"></i>
+                    </div>
+                    <h2>Cosmetic Dentistry</h2>
+                    <p>
+                        Transform your smile and boost your confidence with our range of aesthetic treatments tailored to your goals.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-primary">•</span> Professional Teeth Whitening</li>
+                        <li><span class="bullet-primary">•</span> Porcelain Veneers & Lumineers</li>
+                        <li><span class="bullet-primary">•</span> Tooth-Colored Fillings & Bonding</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Restorative Dentistry -->
+                <div class="service-card card-indigo">
+                    <div class="icon-container icon-indigo">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <h2>Restorative Dentistry</h2>
+                    <p>
+                        Repair and replace damaged or missing teeth to restore function, health, and a beautiful appearance.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-secondary">•</span> Dental Implants & All-on-4</li>
+                        <li><span class="bullet-secondary">•</span> Crowns, Bridges, and Dentures</li>
+                        <li><span class="bullet-secondary">•</span> Root Canal Therapy (Endodontics)</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Orthodontics -->
+                <div class="service-card card-green">
+                    <div class="icon-container icon-green">
+                        <i data-lucide="smile" class="w-6 h-6"></i>
+                    </div>
+                    <h2>Orthodontics</h2>
+                    <p>
+                        Straighten your teeth for a healthier bite and a more symmetrical, attractive smile, using modern, discrete methods.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-primary">•</span> Clear Aligners (Invisible Braces)</li>
+                        <li><span class="bullet-primary">•</span> Traditional Metal Braces</li>
+                        <li><span class="bullet-primary">•</span> Retainers and Post-Treatment Care</li>
+                    </ul>
+                </div>
+                
+                <!-- 5. Pediatric Dentistry -->
+                <div class="service-card card-pink">
+                    <div class="icon-container icon-pink">
+                        <i data-lucide="plus" class="w-6 h-6"></i>
+                    </div>
+                    <h2>Pediatric Dentistry</h2>
+                    <p>
+                        Gentle, caring dental care for children of all ages, focusing on education and a positive first experience.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-secondary">•</span> Children's Exams & Cleanings</li>
+                        <li><span class="bullet-secondary">•</span> Early Orthodontic Evaluation</li>
+                        <li><span class="bullet-secondary">•</span> Cavity Prevention & Management</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Emergency Dentistry -->
+                <div class="service-card card-red">
+                    <div class="icon-container icon-red">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h2>Emergency Care</h2>
+                    <p>
+                        When dental accidents happen, we offer prompt service to relieve pain and address urgent dental issues quickly.
+                    </p>
+                    <ul>
+                        <li><span class="bullet-primary">•</span> Same-Day Appointments for Emergencies</li>
+                        <li><span class="bullet-primary">•</span> Treatment for Toothaches and Swelling</li>
+                        <li><span class="bullet-primary">•</span> Repair of Broken or Chipped Teeth</li>
+                    </ul>
+                </div>
+
+            </section> 
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2>Ready to Schedule Your Visit?</h2>
+                <p>
+                    We're accepting new patients and are excited to welcome you to our practice.
+                </p>
+                <button class="cta-button">
+                    Contact Our Office Today
+                </button>
+            </section>
+
+        </div>
+    </main>
+
+
+     <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>Dental<span>+</span></h3>
+        <p>Your trusted dental partner for a healthy, confident smile.</p>
+      </div>
+      <div class="footer-socials">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 Dental+. All Rights Reserved.</p>
+  </footer>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,645 @@
+/* ===== Navbar ===== */
+header,
+footer {
+  width: 100%;
+}
+
+header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 45px;
+  margin-right: 10px;
+}
+
+.logo h2 {
+  color: #0d47a1;
+}
+
+.logo span {
+  color: #00bcd4;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: #00bcd4;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.phone {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.phone i {
+  color: #00bcd4;
+  margin-right: 6px;
+}
+
+.btn {
+  background: #00bcd4;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #0288d1;
+}
+
+/* ===== Responsive Navbar ===== */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  color: #0d47a1;
+}
+
+/* Show hamburger and hide menu on small screens */
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 100%;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.active,
+  .nav-right.active {
+    display: flex;
+    padding: 20px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar {
+    position: relative;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ===== Footer ===== */
+footer {
+  background: #00264d;
+  color: #ddd;
+  padding: 60px 80px 20px;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.footer-container div {
+  flex: 1;
+  min-width: 220px;
+  margin: 15px;
+}
+
+.footer-about h3 {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.footer-about span {
+  color: #00bcd4;
+}
+
+.social-icons a {
+  color: #ccc;
+  font-size: 1.3rem;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: #00bcd4;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  color: #aaa;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 15px;
+  margin-top: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+    .hero p {
+        font-size: 1em;
+    }
+    .section h2 {
+        font-size: 1.5em;
+    }
+    .team {
+        flex-direction: column;
+        align-items: center;
+    }
+    .team-member {
+        max-width: 100%;
+    }
+    .cta h2 {
+        font-size: 1.5em;
+    }
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+}
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+    .hero p {
+        font-size: 1em;
+    }
+    .section h2 {
+        font-size: 1.5em;
+    }
+    .team {
+        flex-direction: column;
+        align-items: center;
+    }
+    .team-member {
+        max-width: 100%;
+    }
+    .cta h2 {
+        font-size: 1.5em;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- Hero Section Styling --- */
+.hero {
+    /* *** Original Size & Image Settings *** */
+    background: url('dentalwall2.webp') no-repeat center 40%; 
+    background-size: cover;
+    color: white;
+    padding: 80px 20px; /* This padding sets your desired height/size */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 400px; 
+    
+    /* 🔥 THE FIX: Flexbox for Vertical Centering 🔥 */
+    display: flex;       /* Enables flexible layout */
+    align-items: center; /* Vertically centers content (the .container) */
+    justify-content: center; /* Horizontally centers content (good practice) */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+}
+
+.hero .container {
+    /* Ensures the container is positioned correctly within the Flex parent */
+    position: relative;
+    z-index: 2;
+    /* Add this to allow the container to fully stretch across the width */
+    width: 100%; 
+    /* Ensures the max-width rule from your global CSS still applies */
+    max-width: 1200px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 2.8em;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.25em;
+    margin-top: 10px;
+}
+
+/* --- Our Story Section (Two-Column Layout) --- */
+.story-section {
+    padding: 100px 0;
+}
+
+.story-content-grid {
+    display: grid;
+    /* 🔥 MODIFIED: Changed column ratio to give image more space 🔥 */
+    /* Example: 1fr 1.2fr means the image column is 20% wider than the text column */
+    grid-template-columns: 1fr 1.2fr; 
+    
+    gap: 60px; /* Keep or adjust this gap as needed */
+    align-items: center; 
+}
+
+.story-text {
+    padding-right: 20px;
+}
+
+.story-title {
+    font-size: 3em;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: left;
+    line-height: 1.1;
+    position: relative;
+    padding-left: 0;
+}
+
+.story-title span {
+    font-weight: 900;
+    color: var(--dark-blue); 
+}
+
+.story-section h2::after {
+    display: none;
+}
+
+.story-text p {
+    text-align: left;
+    max-width: none;
+    margin-bottom: 25px;
+    color: #555;
+    font-size: 1.05em;
+}
+
+.story-info-icon {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.story-info-icon .fa-info-circle {
+    font-size: 1.5em;
+    color: var(--brand-teal); 
+}
+
+/* Image Wrapper Styling */
+.story-image-wrapper {   
+    padding: 0; 
+    background: transparent; 
+    box-shadow: none; 
+    border-radius: 0; 
+    overflow: hidden; 
+}
+
+.story-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0; 
+}
+
+@media (max-width: 900px) {
+    .story-content-grid {
+        grid-template-columns: 1fr; /* Stacks columns vertically on small screens */
+        gap: 40px;
+    }
+    .story-text {
+        order: 2; /* Puts the text below the image on mobile */
+        padding-right: 0;
+    }
+    .story-image-wrapper {
+        order: 1; /* Puts the image at the top on mobile */
+        margin-bottom: 0;
+    }
+    .story-title {
+        text-align: center; /* Center title on mobile */
+    }
+    .story-title::before {
+        margin: 0 auto -10px auto;
+    }
+    .story-text p {
+        text-align: center;
+    }
+}
+
+
+/* --- Mission & Vision Section Styling --- */
+.mission-vision-section {
+
+    background: url('vis.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    padding: 80px 0;
+    color: #f0f0f0; 
+    margin-bottom: 20px;
+}
+
+
+.mission-vision-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(104, 164, 255, 0.25);
+    z-index: 1;
+}
+
+.mission-vision-section .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.mission-vision-section h2 {
+    color: white; 
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.mission-vision-section h3 {
+    color: white;
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.mission-vision-section h3 i {
+    color: var(--brand-teal, #00bcd4);
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+.mission-vision-section p {
+    color: #ffffffe4; 
+    font-size: 1.1em;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto 30px auto; 
+    text-align: center;
+}
+
+.mission-container,
+.vision-container {
+    padding: 0 20px;
+}
+
+.section {
+    padding: 50px 0;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.section p {
+    text-align: justify;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+
+.section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.section li {
+    margin-bottom: 10px;
+}
+
+/* ===== Call to Action Section ===== */
+.cta {
+    background-color: #f4f4f4;
+    padding: 50px 20px;
+    text-align: center;
+    border-top: 2px solid #00bcd4;
+}
+
+.cta h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.cta p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+.cta a {
+    background: #00bcd4;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.cta a:hover {
+    background: #004880;
+}
+
+/* ===== Services Section Styles ===== */
+.services-section {
+    background-color: var(--light-bg, #f7f9fa);
+    padding: 100px 0;
+    text-align: center;
+}
+
+/* Custom Title Styling (how we help you) */
+.help-title {
+    /* Resetting generic H2 styles for this section */
+    font-size: 3em;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 50px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px; /* Space for the underline */
+}
+
+.help-title::after {
+    /* Thin, vertical line below the title, like in the image */
+    content: '';
+    display: block;
+    width: 2px;
+    height: 30px;
+    background-color: var(--brand-teal, #00bcd4);
+    margin: 10px auto 0;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.help-title span {
+    font-weight: 700; /* Bold for 'we help you' */
+    color: #000;
+}
+
+/* --- Service Cards Grid --- */
+.service-cards-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.service-card {
+    background-color: white;
+    padding: 40px 20px;
+    flex-basis: calc(33.33% - 20px); /* 3 columns with space */
+    max-width: 350px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.icon-wrapper {
+    /* Styling for the circular/square icon area */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(0, 188, 212, 0.1); /* Very light brand color background */
+    margin-bottom: 25px;
+    border: 2px solid var(--brand-teal, #00bcd4);
+}
+
+.icon-wrapper i {
+    font-size: 1.5em;
+    color: var(--brand-teal, #00bcd4);
+}
+
+.service-description {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    text-transform: lowercase; /* Matches the image style */
+    margin-bottom: 30px;
+}
+
+/* Styling the 'learn more' button */
+.service-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    text-transform: lowercase;
+    font-weight: 500;
+    background-color: var(--brand-teal, #00bcd4);
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.service-btn:hover {
+    background-color: #0288d1;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .service-cards-grid {
+        gap: 20px;
+    }
+    .service-card {
+        flex-basis: calc(50% - 20px); /* 2 columns on tablet */
+    }
+}
+
+@media (max-width: 600px) {
+    .help-title {
+        font-size: 2.2em;
+    }
+    .service-card {
+        flex-basis: 100%; /* 1 column on mobile */
+        max-width: 400px;
+    }
+}

@@ -14,6 +14,56 @@ if (empty($userMessage)) {
     exit;
 }
 
+// === FEATURE: Detect if user is asking about nearby dental clinics ===
+if (stripos($userMessage, "nearest dentist") !== false || stripos($userMessage, "dental clinic") !== false) {
+    // Google Maps Places API
+    $mapsKey = "AIzaSyCXQsuBES_kD9F0Xi4SErDrRrwgNHEJJk4"; // your Google Places API key
+    $location = "14.6760,121.0437"; // Default: Quezon City
+    $radius = 5000; // 5 km
+
+    $mapsUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$location&radius=$radius&type=dentist&key=$mapsKey";
+    $mapsResponse = @file_get_contents($mapsUrl);
+
+    if ($mapsResponse === FALSE) {
+        echo json_encode(["error" => "Failed to fetch nearby clinics."]);
+        exit;
+    }
+
+    $mapsData = json_decode($mapsResponse, true);
+
+    if (isset($mapsData["results"]) && count($mapsData["results"]) > 0) {
+        $results = array_slice($mapsData["results"], 0, 5);
+        $clinics = [];
+
+        foreach ($results as $place) {
+            $name = $place["name"] ?? "Unnamed Clinic";
+            $address = $place["vicinity"] ?? "No address available";
+            $open = isset($place["opening_hours"]["open_now"]) && $place["opening_hours"]["open_now"] ? "🟢 Open now" : "🔴 Closed";
+            $clinics[] = "$name - $address ($open)";
+        }
+
+        echo json_encode([
+            "candidates" => [[
+                "content" => [
+                    "parts" => [[
+                        "text" => "Here are some nearby dental clinics:\n\n" . implode("\n\n", $clinics)
+                    ]]
+                ]
+            ]]
+        ]);
+        exit;
+    } else {
+        echo json_encode([
+            "candidates" => [[
+                "content" => [["parts" => [["text" => "Sorry, I couldn’t find any nearby dental clinics."]]]]
+            ]]
+        ]);
+        exit;
+    }
+}
+
+// === Default Gemini Chat Response ===
+
 // 2. Define your API Key and the CORRECTED API Endpoint
 $apiKey = "AIzaSyDuOEoXEJ-3xzYQt8Y6-Soctpmc9WHe7LM"; // 🔑 Replace with your actual Gemini API key
 $modelName = "gemini-2.5-flash"; // A current and stable model

@@ -205,3 +205,30 @@ Please answer briefly in one helpful sentence related to dental care only.`
 
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
+// =====🎤 Voice Dictation Setup=====
+const voiceBtn = document.getElementById("chatbot-voice");
+const inputField = document.getElementById("chatbot-input");
+
+if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+
+  voiceBtn.addEventListener("click", () => {
+    voiceBtn.classList.add("listening");
+    recognition.start();
+  });
+
+  recognition.onresult = (event) => {
+    const voiceText = event.results[0][0].transcript;
+    inputField.value = voiceText;
+    document.getElementById("chatbot-send").click(); // Auto-send the message
+  };
+
+  recognition.onend = () => {
+    voiceBtn.classList.remove("listening");
+  };
+} else {
+  voiceBtn.style.display = "none"; // Hide mic if unsupported
+  console.warn("Speech recognition not supported in this browser.");
+}

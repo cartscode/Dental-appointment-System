@@ -438,4 +438,24 @@ footer {
 .chatbot-input button:hover {
   background: #005f91;
 }
+#chatbot-voice {
+  background: #0078ff;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#chatbot-voice.listening {
+  background: #ff4d4d;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 

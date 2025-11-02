@@ -14,7 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
     const serviceItems = document.querySelectorAll('.service-item');
-    const submitBtn = document.getElementById('submit-btn');
+    
+    // ⭐ NEW/CORRECTED DOM elements for submission
+    const appointmentForm = document.getElementById('appointment-form'); // Target the whole form
+    const selectedServiceInput = document.getElementById('selected-service');
+    const selectedDateInput = document.getElementById('selected-date');
+    
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
     const navRight = document.querySelector('.nav-right'); 
@@ -50,7 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayElement = document.createElement('div');
             dayElement.classList.add('day');
             dayElement.textContent = day;
-            dayElement.dataset.date = `${currentYear}-${currentMonth + 1}-${day}`;
+            
+            // Format the date as YYYY-MM-DD for MySQL DATE type (CRITICAL for PHP)
+            const paddedMonth = String(currentMonth + 1).padStart(2, '0');
+            const paddedDay = String(day).padStart(2, '0');
+            dayElement.dataset.date = `${currentYear}-${paddedMonth}-${paddedDay}`;
 
             const currentDate = new Date(currentYear, currentMonth, day);
             
@@ -77,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.day').forEach(d => d.classList.remove('active-day'));
                     // Add 'active-day' to the clicked day
                     dayElement.classList.add('active-day');
-                    // Store the newly selected date
+                    // Store the newly selected date object
                     selectedDate = currentDate; 
                 });
             }
@@ -128,44 +137,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 3. SUBMIT BUTTON LOGIC (ALERT REMOVED)
-
-    if (submitBtn) {
-        submitBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default form submission if it were a form
-
-            // Get selected service
+    // 3. ⭐ CRITICAL FIX: FORM SUBMISSION LOGIC ⭐
+    
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', (e) => {
+            
+            // 1. Get the values from the active elements
             const selectedServiceElement = document.querySelector('.service-item.active');
-            const selectedService = selectedServiceElement ? selectedServiceElement.querySelector('.service-name').textContent : null;
+            // We use .dataset.service because this gives the simple key (e.g., 'checkup')
+            const serviceValue = selectedServiceElement ? selectedServiceElement.dataset.service : '';
 
-            // Get selected date
-            const selectedDateElement = document.querySelector('.day.active-day');
-            const dateText = selectedDateElement ? selectedDateElement.textContent : null;
-            const monthYearText = monthYearDisplay.textContent;
-            const finalDate = selectedDateElement ? `${dateText} ${monthYearText}` : null;
+            const selectedDayElement = document.querySelector('.day.active-day:not(.disabled-day)');
+            // We use .dataset.date because this is formatted as YYYY-MM-DD (e.g., '2025-10-31')
+            const dateValue = selectedDayElement ? selectedDayElement.dataset.date : '';
 
-            // Get selected time
-            const selectedTimeElement = document.querySelector('.time-slots input[name="time"]:checked');
-            const selectedTime = selectedTimeElement ? selectedTimeElement.parentElement.textContent.trim() : null;
+            // The time is sent automatically by the radio button, but we check if one is selected.
+            const selectedTimeRadio = document.querySelector('input[name="time"]:checked');
+            const timeValue = selectedTimeRadio ? selectedTimeRadio.value : ''; // e.g., '08:00:00'
 
-            // Validation Check
-            if (!selectedService || !finalDate || !selectedTime) {
-                 alert('Please select a Service, Date, and Time before submitting.'); 
-                 return;
+            // 2. Validation Check
+            if (!serviceValue || !dateValue || !timeValue) {
+                e.preventDefault(); // Stop the form from submitting
+                alert('Please ensure you have selected a Service, a Date, and a Time.'); 
+                return;
             }
 
-            // Log data (where you would send it to a server)
-            console.log("--- Appointment Submission Data ---");
-            console.log(`Service: ${selectedService}`);
-            console.log(`Date: ${finalDate}`);
-            console.log(`Time: ${selectedTime}`);
-            console.log("-----------------------------------");
+            // 3. ⭐ Inject values into the hidden input fields for form submission ⭐
+            // This is the step that was missing or incorrect previously!
+            selectedServiceInput.value = serviceValue;
+            selectedDateInput.value = dateValue;
+
+            // Note: The time value (timeValue) is sent via the radio button input 
+            // named "time", so the hidden input for time is not strictly needed.
             
-            // Implement your actual booking confirmation logic below (e.g., fetch, redirect, or inline message) ⭐
-            
-            // Example of a simple placeholder for success:
-            // submitBtn.textContent = 'BOOKING SUCCESSFUL!';
-            // submitBtn.disabled = true;
+            console.log("Submitting form with data:", { service: selectedServiceInput.value, date: selectedDateInput.value, time: timeValue });
+
+            // If we reach this point, the hidden inputs are populated, and the form will submit successfully
+            // to submit_appointment.php with all required data.
 
         });
     }
@@ -180,4 +188,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 });

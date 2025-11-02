@@ -82,8 +82,7 @@
                             <i class="fa-solid fa-calendar-days"></i>
                         </div>
                     </div>
-                    <button class="book-now-btn">Book an Appointment Now!</button>
-                </div>
+                <a href="AppointmentsBooking.php" class="book-now-btn">Book an Appointment Now!</a>
             </div>
         </div>
     </main>

@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             echo "<script>
                     alert('Login successful!');
-                    window.location.href='http://localhost/Project%20in%20IS104/Appointment%20Page/AppointmentsBooking.html';
+                    window.location.href='http://localhost/Project%20in%20IS104/Appointment%20Page/AppointmentsBooking.php';
                   </script>";
         } else {
             echo "<script>alert('Incorrect password! Please try again.'); window.history.back();</script>";

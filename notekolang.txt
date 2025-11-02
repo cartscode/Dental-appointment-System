@@ -13,6 +13,14 @@ Project Objectives:(Ken)
 Scope and Methodology: (Justine)
 
     http://localhost/Project%20in%20IS104/homepage/index.html
+__________________________________________________________________________________________
+Agenda this coming week(Nov 6 - 12):
+1.Adding a webpage for admin
+-User Interface(Nov 8)
+-function
+-database
+2.In appointment page once it submit the appointment the database should have the name of the patient and email. 
+therefore it needs to add another table which is schedule board,Dashboard list. List of miss appointment. until Nov 5!
 
 ________________________________________________________________________________
 Xampp console code

@@ -10,31 +10,35 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="dentist.gif" alt="Logo"> 
-                <h2>Dental<span>+</span></h2>
-            </div>
+ <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="dentist.gif" alt="Logo">
+      <h2>Dental<span>+</span></h2>
+    </div>
 
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </div>
 
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
+    <!-- ✅ New wrapper -->
+    <div class="menu" id="menu">
+      <ul class="nav-links">
+        <li><a href="/Project in IS104/Appointment Page/AppointmentsBooking.php">AppointmentsBooking</a></li>
+        <li><a href="/Project in IS104/Appointment Page/MyAppointments.php" class="active">My Appointment</a></li>
+      </ul>
 
-            <div class="nav-right">
-                <a href="tel:+1234567891" class="phone">
-                    <i class="fa-solid fa-phone"></i> 1234-567-891
-                </a>
-            </div>
-        </nav>
-    </header>
+      <div class="nav-right">
+        <div class="profile">
+          <i class="fa-solid fa-user-circle"></i>
+        </div>
+        <a href="logout.php" class="btn logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
 
     <main class="main-content">
         <div class="welcome-container">

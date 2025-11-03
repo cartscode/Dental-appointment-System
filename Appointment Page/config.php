@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "dental_plus_db"; 
+$database = "dental_db"; 
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 

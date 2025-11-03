@@ -1,38 +1,48 @@
 <?php
-// submit_appointment.php (RESTORED SECURE CODE)
-include('config.php'); // Your existing connection file
+// submit_appointment.php — with session support
+include('config.php'); 
+session_start(); // ✅ Start the session to access logged-in data
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // The data comes from the 'name' attributes in the HTML form:
+
+    // Make sure user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        echo "<script>alert('Please log in first!'); window.location.href='/Login/login.html';</script>";
+        exit();
+    }
+
+    // Retrieve user info from session
+    $user_id = $_SESSION['user_id'];
+    $name    = $_SESSION['name'];
+    $email   = $_SESSION['email'];
+
+    // Get form data
     $service = $_POST['service'] ?? ''; 
     $date    = $_POST['date'] ?? '';    
     $time    = $_POST['time'] ?? '';    
 
-    // 1. Prepare the SQL INSERT statement with '?' placeholders
-    $sql = "INSERT INTO appointments (service_name, appointment_date, appointment_time) VALUES (?, ?, ?)";
+    // Prepare SQL with placeholders
+    $sql = "INSERT INTO appointments (user_id, name, email, service_name, appointment_date, appointment_time)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        // 2. Bind parameters (s = string, s = string, s = string)
-        mysqli_stmt_bind_param($stmt, "sss", $service, $date, $time);
+        // Bind parameters — all are strings except user_id (integer)
+        mysqli_stmt_bind_param($stmt, "isssss", $user_id, $name, $email, $service, $date, $time);
 
-        // 3. Execute the statement
+        // Execute and check for success
         if (mysqli_stmt_execute($stmt)) {
-            // Success! Redirect the user.
-            echo "<script>alert('Appointment booked successfully!'); window.location.href='/confirmation_page.html';</script>";
+            echo "<script>alert('Appointment booked successfully!'); window.location.href='/Project in IS104/Appointment Page/MyAppointments.php';</script>";
         } else {
-            // ERROR HANDLING: Print the specific MySQL error
             echo "<script>alert('Database Error: " . mysqli_error($conn) . "'); window.history.back();</script>";
-            // If the alert doesn't show, uncomment the direct echo below for more visibility:
-            // echo "Error executing statement: " . mysqli_error($conn);
         }
 
         mysqli_stmt_close($stmt);
     } else {
-        // ERROR HANDLING: If the statement could not be prepared
-        echo "Error preparing statement: " . mysqli_error($conn);
+        echo "<script>alert('Error preparing statement: " . mysqli_error($conn) . "'); window.history.back();</script>";
     }
+
+    mysqli_close($conn);
 }
 ?>

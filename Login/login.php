@@ -15,7 +15,11 @@ if (isset($_POST['login'])) {
 
         // Verify password
         if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['name'] = $user['name'];       // ✅ added
+            $_SESSION['email'] = $user['email'];     // ✅ added
+
             echo "<script>
                     alert('Login successful!');
                     window.location.href='http://localhost/Project%20in%20IS104/Appointment%20Page/AppointmentsBooking.php';

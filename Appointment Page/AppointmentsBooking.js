@@ -144,3 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+  // Force reload on back navigation
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });

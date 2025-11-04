@@ -1,10 +1,18 @@
 
-  const menuToggle = document.getElementById('menu-toggle');
-  const navLinks = document.getElementById('nav-links');
-  const navRight = document.querySelector('.nav-right');
+function confirmCancel(apptId) {
+  if (confirm("Are you sure you want to cancel this appointment?")) {
+    window.location.href = "cancel_appointment.php?id=" + apptId;
+  }
+}
 
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    navRight.classList.toggle('active');
+
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+    toggle.addEventListener("click", () => menu.classList.toggle("active"));
+
+    // Force reload on back navigation
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
   });
-

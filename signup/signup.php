@@ -17,7 +17,7 @@ if (isset($_POST['signup'])) {
             VALUES ('$name', '$number', '$email', '$emergency', '$username', '$password', '$month', '$day', '$year', '$gender')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Signup successful!'); window.location.href='\Project in IS104\Login\login.html';</script>";
+        echo "<script>alert('Signup successful!'); window.location.href='/Project in IS104/Login/login.html';</script>";
     } else {
         echo "Error: " . mysqli_error($conn);
     }

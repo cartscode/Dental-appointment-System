@@ -1,3 +1,20 @@
+<?php
+// AppointmentsBooking.php — put this EXACTLY at the top of the file
+include('config.php');
+session_start();
+
+// Prevent caching so browser can't show this page after logout/back
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Redirect to login if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /Project in IS104/Login/login.html    ");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

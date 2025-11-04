@@ -2,8 +2,16 @@
 include('config.php');
 session_start();
 
+
+// ⚠️ Disable all caching so "Back" won't load this page
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /Project in IS104/Login/login.html");
     exit();
 }
 
@@ -17,6 +25,7 @@ $appt_query = "SELECT * FROM appointments WHERE user_id = '$user_id' ORDER BY ap
 $appt_result = mysqli_query($conn, $appt_query);
 $appt = mysqli_fetch_assoc($appt_result);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,9 +104,11 @@ $appt = mysqli_fetch_assoc($appt_result);
               <span class="label">Status</span>
               <div class="content-row">
                 <span class="value pending"><?php echo ucfirst($appt['status']); ?></span>
-                <?php if (strtolower($appt['status']) === 'pending'): ?>
-                  <button class="cancel-btn" onclick="confirmCancel()">Cancel</button>
-                <?php endif; ?>
+              <?php if (strtolower($appt['status']) === 'pending'): ?>
+  <button class="cancel-btn" onclick="confirmCancel(<?php echo $appt['id']; ?>)">Cancel</button>
+<?php endif; ?>
+
+
               </div>
             </div>
           <?php else: ?>
@@ -148,16 +159,7 @@ $appt = mysqli_fetch_assoc($appt_result);
     <p class="footer-bottom">© 2025 Dental+. All Rights Reserved.</p>
   </footer>
 
-  <script>
-    function confirmCancel() {
-      if (confirm("Are you sure you want to cancel this appointment?")) {
-        window.location.href = "cancel_appointment.php";
-      }
-    }
-
-    const toggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("menu");
-    toggle.addEventListener("click", () => menu.classList.toggle("active"));
+  <script src="MyAppointments.js">
   </script>
 </body>
 </html>

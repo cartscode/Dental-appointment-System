@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Dental Plus</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <span id="realtime-clock"></span>
+            <span id="date-display" class="date-display"></span>
+        </div>
+        <div class="header-right">
+            <span class="hi-admin">Hi Admin</span>
+            <button class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
+            <button class="icon-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <nav>
+                <a href="?view=user-accounts" class="nav-item" data-view="user-accounts"><i class="fa-solid fa-users"></i> User Accounts <span class="arrow">&rarr;</span></a>
+                <a href="?view=schedule-today" class="nav-item active" data-view="schedule-today"><i class="fa-solid fa-calendar-day"></i> Schedule for Today <span class="arrow">&rarr;</span></a> 
+                <a href="?view=patients-schedule" class="nav-item" data-view="patients-schedule"><i class="fa-solid fa-calendar"></i> Patients Schedule <span class="arrow">&rarr;</span></a>
+                <a href="?view=patients-message" class="nav-item" data-view="patients-message"><i class="fa-solid fa-message"></i> Patient's Message <span class="arrow">&rarr;</span></a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div id="schedule-today" class="content-view active-view"> 
+                <h2><i class="fa-solid fa-calendar-day"></i> Schedule for Today (<span id="today-count">0</span>)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Service Name</th>
+                            <th>Appointment Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>john@example.com</td>
+                            <td>Cleaning</td>
+                            <td>10:00 AM</td>
+                            <td class="status-pending">Pending</td>
+                            <td>
+                                <button class="action-btn done-btn" data-action="done"><i class="fa-solid fa-check"></i> Done</button>
+                                <button class="action-btn missed-btn" data-action="missed"><i class="fa-solid fa-xmark"></i> Missed</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="patients-schedule" class="content-view">
+                <h2><i class="fa-solid fa-calendar"></i> Patients Schedule</h2>
+                <div class="table-controls">
+                    <input type="text" placeholder="Search by Name/Email/Service..." class="search-input full-width">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Service Name</th>
+                            <th>Appointment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stephanie Villanueva</td>
+                            <td>stephanie@example.com</td>
+                            <td>Cleaning</td>
+                            <td>11/09/2021</td>
+                            <td class="status-done">Done</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="user-accounts" class="content-view">
+                <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
+                <div class="table-controls">
+                    <input type="text" placeholder="Search by Name/Email/ID..." class="search-input full-width">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID No:</th>
+                            <th>Name</th>
+                            <th>Number</th>
+                            <th>Email</th>
+                            <th>Emergency No.</th>
+                            <th>Birthday</th>
+                            <th>Gender</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1001</td>
+                            <td>Alex Johnson</td>
+                            <td>(555) 123-4567</td>
+                            <td>alex@example.com</td>
+                            <td>(555) 987-6543</td>
+                            <td>05/15/1990</td>
+                            <td>Male</td>
+                            <td>
+                                <button class="action-btn edit-btn" data-action="edit"><i class="fa-solid fa-edit"></i> Edit</button>
+                                <button class="action-btn delete-btn" data-action="delete"><i class="fa-solid fa-trash"></i> Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+
+            <div id="patients-message" class="content-view">
+                <h2><i class="fa-solid fa-message"></i> Patient's Message</h2>
+                <div class="table-controls">
+                    <input type="text" placeholder="Search by Name/Email/Message..." class="search-input full-width">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Date Received</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Michael Johnson</td>
+                            <td>michael@example.com</td>
+                            <td class="message-preview">I need to reschedule my appointment...</td>
+                            <td>11/05/2025 09:30 AM</td>
+                            <td>
+                                <button class="action-btn done-btn" title="Mark as Read"><i class="fa-solid fa-envelope-open"></i> Read</button>
+                                <button class="action-btn missed-btn" title="Delete Message"><i class="fa-solid fa-trash"></i> Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

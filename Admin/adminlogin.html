@@ -24,13 +24,13 @@
   <main class="background">
     <div class="login-box">
       <h2>LOGIN</h2>
-      <form>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
+      <form action="admin_login.php" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
         <button type="submit">SIGN IN</button>
 
         <p class="signup-text">
-          Don't have an account? <a href="#">SIGN UP</a>
+          Don't have an account? <a href="adminsignup.php">SIGN UP</a>
         </p>
       </form>
     </div>

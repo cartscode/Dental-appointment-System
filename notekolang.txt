@@ -1,12 +1,10 @@
 Bug need to be fixed by me (Carter)
 1.hamburger nav in homepage  ✅
-2. Connectivity of all links ✅
+2.Connectivity of all links ✅
 3.login security ✅
-
-Agenda for this week 
-1.Register & Login database /AI powered chatbot - (Nov 5,2025)
-2.About us,Service and Contact should have content - ken & justine (Oct 30,2025)
-3.Appointmentsbooking and myappointment - Allen (until Nov 5,2025)
+4.Login & Register amdmin database and function
+5.Fetch table in Admin list of patients table (database)
+6.Contact us function (fetch in database)
 
 Documentation
 Problem statement: (Allen)
@@ -14,6 +12,9 @@ Project Objectives:(Ken)
 Scope and Methodology: (Justine)
 
     http://localhost/Project%20in%20IS104/homepage/index.html
+
+    Admin webpage
+    http://localhost/Project in IS104/Admin/adminlogin.html
 __________________________________________________________________________________________
 Agenda this coming week(Nov 6 - 12):
 1.Adding a webpage for admin

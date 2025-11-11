@@ -1,7 +1,8 @@
 <?php
+// MyAppointments.php
+
 include('config.php');
 session_start();
-
 
 // ⚠️ Disable all caching so "Back" won't load this page
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -20,12 +21,24 @@ $user_query = "SELECT * FROM users WHERE id = '$user_id'";
 $user_result = mysqli_query($conn, $user_query);
 $user = mysqli_fetch_assoc($user_result);
 
-// Fetch latest appointment
-$appt_query = "SELECT * FROM appointments WHERE user_id = '$user_id' ORDER BY appointment_date DESC LIMIT 1";
+// -------------------------------------------------------------------------
+// FETCH THE LATEST *PENDING* APPOINTMENT
+// -------------------------------------------------------------------------
+// This query specifically looks for the most recent appointment that is NOT Done, Missed, or Cancelled.
+$appt_query = "SELECT * FROM appointments 
+               WHERE user_id = '$user_id' 
+               AND status = 'Pending' 
+               ORDER BY appointment_date DESC, appointment_time DESC 
+               LIMIT 1";
 $appt_result = mysqli_query($conn, $appt_query);
 $appt = mysqli_fetch_assoc($appt_result);
-?>
 
+// -------------------------------------------------------------------------
+// NEW LOGIC: Determine if the user can book a new appointment
+// -------------------------------------------------------------------------
+// The user can book a new appointment if $appt is FALSE (meaning no PENDING appointment found)
+$can_book_new = ($appt === null);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +135,7 @@ $appt = mysqli_fetch_assoc($appt_result);
         </div>
 
         <!-- RIGHT SIDE: Book New Appointment -->
-        <div class="new-appointment-card">
+      <div class="new-appointment-card">
           <h2 class="card-title">Book a New Appointment</h2>
 
           <div class="icon-grid">
@@ -132,9 +145,17 @@ $appt = mysqli_fetch_assoc($appt_result);
             <div class="icon-circle"><i class="fa-solid fa-calendar-check"></i></div>
           </div>
 
-          <button class="book-now-btn" onclick="window.location.href='AppointmentsBooking.php'">
-            Book Now
-          </button>
+          <?php if ($can_book_new): ?>
+            <button class="book-now-btn" onclick="window.location.href='/Project in IS104/Appointment Page/AppointmentsBooking.php'">
+              Book Now
+            </button>
+          <?php else: ?>
+            <button class="book-now-btn disabled-btn" disabled>
+              Book Now (Pending Appointment)
+            </button>
+          <?php endif; ?>
+        </div>
+
         </div>
       </div>
     </div>

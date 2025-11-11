@@ -22,8 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $time    = $_POST['time'] ?? '';    
 
     // ✅ Step 1: Check if the user already has an appointment
-    $check_sql = "SELECT * FROM appointments WHERE user_id = ?";
-    $check_stmt = mysqli_prepare($conn, $check_sql);
+$check_sql = "SELECT id FROM appointments WHERE user_id = ? AND status = 'Pending'";    $check_stmt = mysqli_prepare($conn, $check_sql);
     mysqli_stmt_bind_param($check_stmt, "i", $user_id);
     mysqli_stmt_execute($check_stmt);
     $result = mysqli_stmt_get_result($check_stmt);

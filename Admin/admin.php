@@ -180,25 +180,31 @@ $missed_count = mysqli_num_rows($result_missed);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        while ($row = mysqli_fetch_assoc($result_missed)):
-                        ?>
-                        <tr data-appointment-id="<?php echo $row['id']; ?>">
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['service_name']); ?></td>
-                            <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
-                            <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
-                            <td>
-                                <button class="action-btn edit-btn" data-action="pending" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-rotate-right"></i> Reschedule</button>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
+    <?php 
+    while ($row = mysqli_fetch_assoc($result_missed)):
+    ?>
+    <tr data-appointment-id="<?php echo $row['id']; ?>">
+        <td><?php echo htmlspecialchars($row['name']); ?></td>
+        <td><?php echo htmlspecialchars($row['email']); ?></td>
+        <td><?php echo htmlspecialchars($row['service_name']); ?></td>
+        <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
+        <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
+        
+        <!-- ACTION CELL: Contains the Delete Link -->
+        <td>
+            <a href="delete_appointment.php?id=<?php echo $row['id']; ?>"
+               class="action-btn edit-btn"
+               onclick="return confirm('Are you sure you want to permanently DELETE this missed appointment record?');">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </td>
+        <!-- END ACTION CELL -->
+    </tr>
+    <?php endwhile; ?>
+</tbody>
                 </table>
                 <?php if (isset($result_missed)) mysqli_free_result($result_missed); ?>
             </div>
-            
             <div id="user-accounts" class="content-view">
                 <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
                 <div class="table-controls">

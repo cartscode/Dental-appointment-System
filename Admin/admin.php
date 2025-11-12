@@ -11,22 +11,49 @@
 // ====================================================================
 // 1. DATABASE CONNECTION AND DATA FETCHING LOGIC
 // ====================================================================
+// ====================================================================
+// 1. DATABASE CONNECTION AND DATA FETCHING LOGIC (SECURED)
+// ====================================================================
 require_once 'db_connect.php';
 
 // --- Data Fetching for "Schedule for Today" ---
-$today_date = date('Y-m-d');
-$sql_today = "SELECT id, name, email, service_name, appointment_time, status 
-              FROM appointments 
-              WHERE appointment_date = '$today_date' 
-              AND status = 'Pending'  /* <--- ADD THIS LINE */
-              ORDER BY appointment_time ASC";
-$result_today = mysqli_query($conn, $sql_today);
-if (!$result_today) {
-    die("Error in Today's Schedule Query: " . mysqli_error($conn));
+$today_date = date('Y-m-d'); // Ensures the format is YYYY-MM-DD for SQL comparison
+
+// 1. Prepare the statement
+$sql_today = "
+    SELECT id, name, email, service_name, appointment_date, appointment_time, status 
+    FROM appointments 
+    WHERE appointment_date = ?
+      AND status = 'Pending'
+    ORDER BY appointment_time ASC
+";
+$stmt_today = mysqli_prepare($conn, $sql_today);
+
+if (!$stmt_today) {
+    die('Preparation Error for Today\'s Schedule: ' . mysqli_error($conn));
 }
+
+// 2. Bind the parameter (the date)
+// 's' means the parameter is a string
+mysqli_stmt_bind_param($stmt_today, "s", $today_date); 
+
+// 3. Execute the statement
+mysqli_stmt_execute($stmt_today);
+
+// 4. Get the result
+$result_today = mysqli_stmt_get_result($stmt_today);
+
+if (!$result_today) {
+    die('Execution Error for Today\'s Schedule: ' . mysqli_error($conn));
+}
+
 $today_count = mysqli_num_rows($result_today);
 
+// Note: You must now close the statement object when done with it.
+// We'll leave it open for now as it's needed for the loop later in the HTML, 
+// but in a production script, you'd close it after fetching all data.
 
+// ... rest of your data fetching logic
 // --- Data Fetching for "Patients Schedule" ---
 $sql_all_appointments = "SELECT id, name, email, service_name, appointment_date, status 
                          FROM appointments 

@@ -264,6 +264,7 @@ $missed_count = mysqli_num_rows($result_missed);
                             <td><?php echo $birthday; ?></td>
                             <td><?php echo htmlspecialchars($row['gender']); ?></td>
                             <td>
+                                <!-- this part -->
                                 <button class="action-btn edit-btn" data-action="edit" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-edit"></i> Edit</button>
                                 <button class="action-btn delete-btn" data-action="delete" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-trash"></i> Delete</button>
                             </td>
@@ -295,10 +296,18 @@ $missed_count = mysqli_num_rows($result_missed);
                             <td>michael@example.com</td>
                             <td class="message-preview">I need to reschedule my appointment...</td>
                             <td>11/05/2025 09:30 AM</td>
-                            <td>
-                                <button class="action-btn done-btn" title="Mark as Read"><i class="fa-solid fa-envelope-open"></i> Read</button>
-                                <button class="action-btn missed-btn" title="Delete Message"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </td>
+                          <td>
+    <a href="edit_user.php?id=<?php echo $row['id']; ?>" class="action-btn edit-btn">
+        <i class="fa-solid fa-edit"></i> Edit
+    </a>
+
+    <a href="delete_user.php?id=<?php echo $row['id']; ?>" 
+       class="action-btn delete-btn"
+       onclick="return confirm('Are you sure you want to DELETE this user?');">
+       <i class="fa-solid fa-trash"></i> Delete
+    </a>
+</td>
+
                         </tr>
                     </tbody>
                 </table>

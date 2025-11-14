@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $db_password)) {
             $_SESSION['admin_id'] = $row['id'];
             $_SESSION['admin_username'] = $row['username'];
-            header("Location: /Project in IS104/Admin/admin.html");
+            header("Location: /Project in IS104/Admin/admin.php");
             exit();
         } else {
-            echo "<script>alert('Incorrect password!'); window.location.href='/Project in IS104/admin/adminlogin.html';</script>";
+            echo "<script>alert('Incorrect password!'); window.location.href='/Project in IS104/Admin/adminlogin.html';</script>";
         }
     } else {
-        echo "<script>alert('Username not found!'); window.location.href='/Project in IS104/admin/adminlogin.html';</script>";
+        echo "<script>alert('Username not found!'); window.location.href='/Project in IS104/admin/Adminlogin.html';</script>";
     }
 
     $stmt->close();

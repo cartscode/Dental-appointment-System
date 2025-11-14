@@ -11,8 +11,8 @@ Bug need to be fixed by me (Carter)
 10.Email integrated automation.
 11.Logout button.
 deadline(Nov 19)
-(testing & debugging)
-(Documentations & Presentation)
+(testing & debugging)(20-22 November)
+(Documentations & Presentation)(NOv 24-28)
 
 Documentation
 Problem statement: (Allen)

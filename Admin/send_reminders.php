@@ -7,7 +7,7 @@ require 'db_connect.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Target = appointments 2 days from today
+// Get appointments exactly 2 days from today
 $targetDate = date('Y-m-d', strtotime('+2 days'));
 
 $sql = "SELECT * FROM appointments WHERE appointment_date = ?";
@@ -18,8 +18,8 @@ $result = $stmt->get_result();
 
 while ($row = $result->fetch_assoc()) {
 
-    $email = $row['email'];         // ← use existing email column
-    $name = $row['name'];           // patient name
+    $email = $row['email'];
+    $name = $row['name'];
     $date = $row['appointment_date'];
     $time = $row['appointment_time'];
 
@@ -35,7 +35,7 @@ while ($row = $result->fetch_assoc()) {
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        // Send email
+        // Email details
         $mail->setFrom('Healthcare.plus12300@gmail.com', 'Dental Clinic');
         $mail->addAddress($email, $name);
 

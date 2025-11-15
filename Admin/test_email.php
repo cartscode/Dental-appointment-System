@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/PHPMailer.php';
-require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/SMTP.php';
-require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/Exception.php';
+require __DIR__ . '/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/PHPMailer/src/SMTP.php';
+require __DIR__ . '/PHPMailer/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -13,11 +13,10 @@ try {
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'Healthcare.plus12300@gmail.com';
-    $mail->Password = 'sivu zuwe cmbm nmew'; // App password, NOT Gmail password
+    $mail->Password = 'sivu zuwe cmbm nmew'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    // Send to yourself
     $mail->setFrom('cartercarig@gmail.com', 'Test');
     $mail->addAddress('cartercarig@gmail.com', 'You');
 

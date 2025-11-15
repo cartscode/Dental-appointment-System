@@ -36,11 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
         $conn->close();
         exit();
-    } else {
-        // FAILURE: Send a JSON error response
+  } else {
+        // FAILURE: Send a JSON error response with the specific error message
         echo json_encode([
             'success' => false, 
-            'message' => 'Database error: Could not save your message.'
+            'message' => 'Database error: Could not save your message. Detail: ' . $stmt->error
         ]);
         $stmt->close();
         $conn->close();

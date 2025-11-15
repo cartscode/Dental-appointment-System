@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";       // <-- CHECK: If your password is NOT blank, change this.
 $password = "";           // <-- CHECK: If your password is NOT blank, enter it here.
-$dbname = "dental_plus";  // The database name
+$dbname = "dental_db";  // The database name
 
 // Establish connection
 $conn = new mysqli($servername, $username, $password, $dbname);

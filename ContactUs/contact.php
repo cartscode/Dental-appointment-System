@@ -70,7 +70,7 @@
         <p class="footer-bottom">© 2025 Dental+. All Rights Reserved.</p>
     </footer>
 
-    <script src="loginscript.js"></script>
+    
     <script src="contact.js"></script>
 </body>
 </html>

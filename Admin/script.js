@@ -130,3 +130,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all search inputs using the common class 'table-search'
+    const searchInputs = document.querySelectorAll('.table-search');
+
+    // Attach the search function to each input found
+    searchInputs.forEach(input => {
+        // Determine the target table based on the input's ID
+        let targetTableId;
+        if (input.id === 'searchAppointments') {
+            targetTableId = 'appointmentsTable';
+        } else if (input.id === 'searchMissed') {
+            targetTableId = 'missedTable';
+        } else if (input.id === 'searchUsers') {
+            targetTableId = 'usersTable';
+        } else if (input.id === 'searchMessages') {
+            targetTableId = 'messagesTable';
+        }
+
+        const targetTable = document.getElementById(targetTableId);
+        
+        // Only proceed if the table was successfully found
+        if (targetTable) {
+            input.addEventListener('keyup', function() {
+                filterTable(this.value.toLowerCase(), targetTable);
+            });
+        }
+    });
+});
+
+/**
+ * Filters the given HTML table based on a search term.
+ * @param {string} filter - The text to search for (already lowercased).
+ * @param {HTMLElement} table - The <table> element to filter.
+ */
+function filterTable(filter, table) {
+    // Get the rows from the table body
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    // Loop through all table rows
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        
+        // Get the text content of the entire row for searching
+        const rowText = row.textContent.toLowerCase();
+        
+        // Show or hide the row based on the filter
+        if (rowText.includes(filter)) {
+            row.style.display = ""; // Show the row
+        } else {
+            row.style.display = "none"; // Hide the row
+        }
+    }
+}

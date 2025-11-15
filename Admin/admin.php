@@ -157,7 +157,7 @@ $missed_count = mysqli_num_rows($result_missed);
             <div id="patients-schedule" class="content-view">
                 <h2><i class="fa-solid fa-calendar"></i> Patients Schedule</h2>
                 <div class="table-controls">
-                    <input type="text" placeholder="Search by Name/Email/Service..." class="search-input full-width">
+                    <input type="text" id="searchAppointments" class="search-input table-search" placeholder="Search by Name/Email/Service..." class="search-input full-width">
                 </div>
                 <table>
                     <thead>
@@ -190,7 +190,7 @@ $missed_count = mysqli_num_rows($result_missed);
             <div id="missed-appointments" class="content-view">
                 <h2><i class="fa-solid fa-calendar-times"></i> Missed Appointments List (<span id="missed-count-display"><?php echo $missed_count; ?></span>)</h2>
                 <div class="table-controls">
-                    <input type="text" placeholder="Search by Name/Email/Service..." class="search-input full-width">
+                    <input type="text" id="searchMissed" placeholder="Search by Name/Email/Service..." class="search-input full-width">
                 </div>
                 <table>
                     <thead>
@@ -232,7 +232,7 @@ $missed_count = mysqli_num_rows($result_missed);
             <div id="user-accounts" class="content-view">
                 <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
                 <div class="table-controls">
-                    <input type="text" placeholder="Search by Name/Email/ID..." class="search-input full-width">
+                    <input type="text" id="searchMissed" placeholder="Search by Name/Email/ID..." class="search-input full-width">
                 </div>
                 <table>
                     <thead>
@@ -264,7 +264,7 @@ $missed_count = mysqli_num_rows($result_missed);
                             <td><?php echo $birthday; ?></td>
                             <td><?php echo htmlspecialchars($row['gender']); ?></td>
                             <td>
-                                <!-- this part -->
+                                <!-- this part (work on this btn dlete and update)-->
                                 <button class="action-btn edit-btn" data-action="edit" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-edit"></i> Edit</button>
                                 <button class="action-btn delete-btn" data-action="delete" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-trash"></i> Delete</button>
                             </td>
@@ -278,7 +278,7 @@ $missed_count = mysqli_num_rows($result_missed);
             <div id="patients-message" class="content-view">
                 <h2><i class="fa-solid fa-message"></i> Patient's Message</h2>
                 <div class="table-controls">
-                    <input type="text" placeholder="Search by Name/Email/Message..." class="search-input full-width">
+                    <input type="text" id="searchMessages" placeholder="Search by Name/Email/Message..." class="search-input full-width">
                 </div>
                 <table>
                     <thead>
@@ -317,5 +317,6 @@ $missed_count = mysqli_num_rows($result_missed);
     </div>
 
     <script src="script.js"></script> 
+    
 </body>
 </html>

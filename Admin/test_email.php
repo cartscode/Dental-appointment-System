@@ -1,9 +1,10 @@
 <?php
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-require 'PHPMailer/src/Exception.php';
+require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/SMTP.php';
+require __DIR__ . '/Project in IS104/Admin/PHPMailer/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $mail = new PHPMailer(true);
 
@@ -11,21 +12,21 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'Healthcare.plus12300@gmail.com';   // your gmail
-    $mail->Password = 'sivu zuwe cmbm nmew';     // your app password
+    $mail->Username = 'Healthcare.plus12300@gmail.com';
+    $mail->Password = 'sivu zuwe cmbm nmew'; // App password, NOT Gmail password
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('Healthcare.plus12300@gmail.com', 'Dental Clinic');
-    $mail->addAddress('cartercarig@gmail.com');   // send to YOURSELF for test
+    // Send to yourself
+    $mail->setFrom('cartercarig@gmail.com', 'Test');
+    $mail->addAddress('cartercarig@gmail.com', 'You');
 
     $mail->isHTML(true);
-    $mail->Subject = 'Test Email';
-    $mail->Body = 'This is a test email from your XAMPP system.';
+    $mail->Subject = 'PHPMailer Test';
+    $mail->Body = 'PHPMailer is working!';
 
     $mail->send();
-    echo "Email sent!";
-} 
-catch (Exception $e) {
-    echo "Error: " . $mail->ErrorInfo;
+    echo 'Message sent successfully!';
+} catch (Exception $e) {
+    echo 'Error: ' . $mail->ErrorInfo;
 }

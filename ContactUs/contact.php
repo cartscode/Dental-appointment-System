@@ -19,12 +19,12 @@
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="/homepage/index.html">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#" class="active">Contact Us</a></li>
-            </ul>
+             <ul class="nav-links" id="nav-links">
+        <li><a href="/Project in IS104/homepage/index.html" class="active">Home</a></li>
+        <li><a href="/Project in IS104/About Us/AboutUs.html">About Us</a></li>
+        <li><a href="/Project in IS104/Services/services.html">Services</a></li>
+        <li><a href="/Project in IS104/contactUs/contact.php">Contact Us</a></li>
+      </ul>
             <div class="nav-right">
                 <a href="tel:+1234567891" class="phone">
                     <i class="fa-solid fa-phone"></i> 1234-567-891

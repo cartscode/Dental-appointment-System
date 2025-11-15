@@ -4,8 +4,8 @@ Bug need to be fixed by me (Carter)
 3.login security ✅
 4.Login & Register amdmin database and function ✅
 5.Fetch table in Admin list of patients table (database) ✅
-6.Contact us function (fetch in database)
-7.Patient's message fetch in admin webpage table.
+6.Contact us function (fetch in database) ✅
+7.Patient's message fetch in admin webpage table.✅
 8.User's account action buttons
 9.Search functions
 10.Email integrated automation.

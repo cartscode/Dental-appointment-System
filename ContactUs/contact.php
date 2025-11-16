@@ -29,7 +29,7 @@
                 <a href="tel:+1234567891" class="phone">
                     <i class="fa-solid fa-phone"></i> 1234-567-891
                 </a>
-                <a href="booking.html" class="btn">Book Appointment</a>
+                <a href="/Project in IS104/Login/login.html" class="btn">Book Appointment</a>
             </div>
         </nav>
     </header>

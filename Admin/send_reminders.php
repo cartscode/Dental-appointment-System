@@ -15,6 +15,8 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $targetDate);
 $stmt->execute();
 $result = $stmt->get_result();
+echo "Target Date: $targetDate<br>";
+echo "Rows found: " . $result->num_rows . "<br>";
 
 while ($row = $result->fetch_assoc()) {
 

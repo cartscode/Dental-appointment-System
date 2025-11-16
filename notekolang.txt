@@ -24,6 +24,9 @@ Scope and Methodology: (Justine)
 
     Admin webpage
     http://localhost/Project in IS104/Admin/adminlogin.html
+
+    email integration testing
+    http://localhost/Project in IS104/Admin/send_reminders.php
 __________________________________________________________________________________________
 Agenda this coming week(Nov 6 - 12):
 1.Adding a webpage for admin

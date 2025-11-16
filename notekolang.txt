@@ -7,11 +7,11 @@ Bug need to be fixed by me (Carter)
 5.Fetch table in Admin list of patients table (database) ✅
 6.Contact us function (fetch in database) ✅
 7.Patient's message fetch in admin webpage table.✅
-8.User's account action buttons.
-9.Search functions.
-10.Email integrated automation. in progress
-11.Logout button.
-deadline(Nov 19)
+8.User's account action buttons "edit,delete".(Justine)
+9.Search functions in "schedule today","patient's shedule" . (Allen)
+10.Email integrated automation. (debugging and testing) (carter)
+11.Logout button in admin. (ken)
+deadline(Nov 20)
 (testing & debugging)(20-22 November)
 (Documentations & Presentation)(NOv 24-28)
 
@@ -73,3 +73,11 @@ CREATE TABLE admin (
     fullname VARCHAR(150),
     email VARCHAR(150),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP this is a database);
+
+CREATE TABLE contacts (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

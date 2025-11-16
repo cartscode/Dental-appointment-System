@@ -20,10 +20,10 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
              <ul class="nav-links" id="nav-links">
-        <li><a href="/Project in IS104/homepage/index.html" class="active">Home</a></li>
+        <li><a href="/Project in IS104/homepage/index.html">Home</a></li>
         <li><a href="/Project in IS104/About Us/AboutUs.html">About Us</a></li>
         <li><a href="/Project in IS104/Services/services.html">Services</a></li>
-        <li><a href="/Project in IS104/contactUs/contact.php">Contact Us</a></li>
+        <li><a href="/Project in IS104/contactUs/contact.php" class="active">Contact Us</a></li>
       </ul>
             <div class="nav-right">
                 <a href="tel:+1234567891" class="phone">

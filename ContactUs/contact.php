@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="src/dentist.gif" alt="Logo">
+                <img src="/Project in IS104/ContactUs/dentist.gif" alt="Logo">
                 <h2>Dental<span>+</span></h2>
             </div>
             <div class="menu-toggle" id="menu-toggle">

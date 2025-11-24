@@ -27,6 +27,9 @@ Scope and Methodology: (Justine)
 
     email integration testing
     http://localhost/Project in IS104/Admin/send_reminders.php
+
+    Missed appointment testin
+    http://localhost/Project%20in%20IS104/Admin/mark_missed.php
 __________________________________________________________________________________________
 Agenda this coming week(Nov 6 - 12):
 1.Adding a webpage for admin

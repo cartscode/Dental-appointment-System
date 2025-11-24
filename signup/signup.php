@@ -2,7 +2,7 @@
 include('config.php');
 
 if (isset($_POST['signup'])) {
-    $name = $_POST['name'];
+    $name = $_POST['name'];f
     $number = $_POST['number'];
     $email = $_POST['email'];
     $emergency = $_POST['emergency'];

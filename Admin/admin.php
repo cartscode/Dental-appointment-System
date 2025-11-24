@@ -49,11 +49,14 @@ $sql_missed = "SELECT id, name, email, service_name, appointment_date, appointme
 $result_missed = mysqli_query($conn, $sql_missed);
 $missed_count = mysqli_num_rows($result_missed);
 
-// ====================================================================
-// 2. FETCH CONTACT MESSAGES (NEW SECTION)
-// ====================================================================
+// --- Contact Messages ---
 $sql_messages = "SELECT * FROM contacts ORDER BY submission_date DESC";
 $result_messages = mysqli_query($conn, $sql_messages);
+
+// --- Email Sent Records ---
+$sql_email_sent = "SELECT * FROM email_sent_records ORDER BY sent_at DESC";
+$result_email_sent = mysqli_query($conn, $sql_email_sent);
+$email_sent_count = mysqli_num_rows($result_email_sent);
 
 ?>
 <!DOCTYPE html>
@@ -84,10 +87,9 @@ $result_messages = mysqli_query($conn, $sql_messages);
                 <a href="?view=user-accounts" class="nav-item" data-view="user-accounts"><i class="fa-solid fa-users"></i> User Accounts <span class="arrow">&rarr;</span></a>
                 <a href="?view=schedule-today" class="nav-item active" data-view="schedule-today"><i class="fa-solid fa-calendar-day"></i> Schedule for Today <span class="arrow">&rarr;</span></a> 
                 <a href="?view=patients-schedule" class="nav-item" data-view="patients-schedule"><i class="fa-solid fa-calendar"></i> Patients Schedule <span class="arrow">&rarr;</span></a>
-                
                 <a href="?view=missed-appointments" class="nav-item" data-view="missed-appointments"><i class="fa-solid fa-calendar-times"></i> Missed Appointments (<span id="missed-count-sidebar"><?php echo $missed_count; ?></span>) <span class="arrow">&rarr;</span></a>
-
                 <a href="?view=patients-message" class="nav-item" data-view="patients-message"><i class="fa-solid fa-message"></i> Patient's Message <span class="arrow">&rarr;</span></a>
+                <a href="?view=email-sent-records" class="nav-item" data-view="email-sent-records"><i class="fa-solid fa-envelope"></i> Email Sent Records <span class="arrow">&rarr;</span></a>
             </nav>
         </aside>
 
@@ -164,7 +166,6 @@ $result_messages = mysqli_query($conn, $sql_messages);
             ============================= -->
             <div id="missed-appointments" class="content-view">
                 <h2><i class="fa-solid fa-calendar-times"></i> Missed Appointments List (<span id="missed-count-display"><?php echo $missed_count; ?></span>)</h2>
-
                 <table>
                     <thead>
                         <tr>
@@ -202,7 +203,6 @@ $result_messages = mysqli_query($conn, $sql_messages);
             ============================= -->
             <div id="user-accounts" class="content-view">
                 <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
-
                 <table>
                     <thead>
                         <tr>
@@ -245,11 +245,10 @@ $result_messages = mysqli_query($conn, $sql_messages);
             </div>
 
             <!-- ===========================
-                 PATIENT'S MESSAGE (NEW)
+                 PATIENT'S MESSAGE
             ============================= -->
             <div id="patients-message" class="content-view">
                 <h2><i class="fa-solid fa-message"></i> Patient's Message</h2>
-
                 <table>
                     <thead>
                         <tr>
@@ -261,21 +260,13 @@ $result_messages = mysqli_query($conn, $sql_messages);
                         </tr>
                     </thead>
                     <tbody>
-
-                    <?php while ($row = mysqli_fetch_assoc($result_messages)): ?>
+                        <?php while ($row = mysqli_fetch_assoc($result_messages)): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            
-                            <td class="message-preview">
-                                <?php echo nl2br(htmlspecialchars($row['message'])); ?>
-                            </td>
-
+                            <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
                             <td><?php echo date("m/d/Y h:i A", strtotime($row['submission_date'])); ?></td>
-
                             <td>
-                                
-
                                 <a href="delete_message.php?id=<?php echo $row['id']; ?>" 
                                    onclick="return confirm('Delete this message?');"
                                    class="action-btn delete-btn">
@@ -283,8 +274,44 @@ $result_messages = mysqli_query($conn, $sql_messages);
                                 </a>
                             </td>
                         </tr>
-                    <?php endwhile; ?>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
 
+            <!-- ===========================
+                 EMAIL SENT RECORDS
+            ============================= -->
+            <div id="email-sent-records" class="content-view">
+                <h2><i class="fa-solid fa-envelope"></i> Email Sent Records (<span id="email-sent-count"><?php echo $email_sent_count; ?></span>)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Recipient Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Sent At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($result_email_sent)): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['recipient_email']); ?></td>
+                            <td><?php echo htmlspecialchars($row['subject']); ?></td>
+                            <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
+                            <td><?php echo htmlspecialchars($row['status']); ?></td>
+                            <td><?php echo date('m/d/Y h:i A', strtotime($row['sent_at'])); ?></td>
+                            <td>
+                                <a href="delete_email.php?id=<?php echo $row['id']; ?>" 
+                                   class="action-btn delete-btn"
+                                   onclick="return confirm('Delete this email record?');">
+                                   <i></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>

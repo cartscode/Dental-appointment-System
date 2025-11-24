@@ -20,7 +20,7 @@ Problem statement: (Allen)
 Project Objectives:(Ken)
 Scope and Methodology: (Justine)
 
-      http://localhost/Project%20in%20IS104/homepage/index.html
+        http://localhost/Project%20in%20IS104/homepage/index.html
 
     Admin webpage
     http://localhost/Project in IS104/Admin/adminlogin.html

@@ -87,3 +87,21 @@ CREATE TABLE contacts (
     message TEXT NOT NULL,
     submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE missed_appointments (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(11),
+    name VARCHAR(100),
+    email VARCHAR(100),
+    service_name VARCHAR(100),
+    appointment_date DATE,
+    appointment_time TIME,
+    status VARCHAR(20) DEFAULT 'Missed',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+INSERT INTO missed_appointments (user_id, name, email, service_name, appointment_date, appointment_time)
+SELECT user_id, name, email, service_name, appointment_date, appointment_time
+FROM appointments
+WHERE status = 'Pending' AND appointment_date < CURDATE();

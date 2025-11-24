@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // For navigation
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
+    
+    // Set initial date input value for today's date
+    if (selectedDate) {
+        selectedDateInput.value = selectedDate.toISOString().split('T')[0];
+    }
+
 
     // ===== CALENDAR RENDERING =====
     function renderCalendar() {
@@ -66,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.day').forEach(d => d.classList.remove('active-day'));
                     dayElement.classList.add('active-day');
                     selectedDate = currentDate;
+                    // Update the hidden date input immediately on selection
+                    selectedDateInput.value = dayElement.dataset.date;
                 });
             }
 
@@ -104,12 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', () => {
             serviceItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
+            // Update the hidden service input immediately on selection
+            selectedServiceInput.value = item.dataset.service; 
         });
     });
 
-    // ===== FORM SUBMISSION =====
+    // =======================================================
+    // ===== FORM SUBMISSION (MODIFIED TO INCLUDE PROMPT) =====
+    // =======================================================
     if (appointmentForm) {
         appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Stop the default form submission immediately
+
             const selectedServiceElement = document.querySelector('.service-item.active');
             const serviceValue = selectedServiceElement ? selectedServiceElement.dataset.service : '';
 
@@ -119,20 +133,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedTimeRadio = document.querySelector('input[name="time"]:checked');
             const timeValue = selectedTimeRadio ? selectedTimeRadio.value : '';
 
+            // 1. Validation Check
             if (!serviceValue || !dateValue || !timeValue) {
-                e.preventDefault();
-                alert('Please ensure you have selected a Service, a Date, and a Time.');
+                alert('🚨 Please ensure you have selected a Service, a Date, and a Time before submitting.');
                 return;
             }
 
+            // Ensure hidden fields are updated (though they should be via click handlers)
             selectedServiceInput.value = serviceValue;
             selectedDateInput.value = dateValue;
 
-            console.log("Submitting form with data:", {
-                service: selectedServiceInput.value,
-                date: selectedDateInput.value,
-                time: timeValue
-            });
+            // 2. Terms and Conditions Prompt
+            const termsAndConditions = `
+                🩺 Dental+ Appointment Terms and Conditions:
+
+                1. Arrival Time: Please arrive 15 minutes before your scheduled appointment.
+                2. Cancellation Policy: Notify us at least 24 hours in advance for cancellations.
+                3. No-Show Fee: A fee may apply for missed appointments without proper notice.
+
+                Do you agree to these Terms and Conditions?
+                (Click 'OK' to submit your appointment, or 'Cancel' to stop.)
+            `;
+
+            if (confirm(termsAndConditions)) {
+                // 3. User clicked 'OK' (Yes) - Proceed with submission
+                console.log("Submitting form with data:", {
+                    service: selectedServiceInput.value,
+                    date: selectedDateInput.value,
+                    time: timeValue
+                });
+                
+                // Programmatically submit the form
+                appointmentForm.submit(); 
+            } else {
+                // 4. User clicked 'Cancel' (No) - Submission is cancelled
+                alert('Appointment booking cancelled. Submission halted.');
+            }
         });
     }
 
@@ -145,9 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-  // Force reload on back navigation
-  window.addEventListener("pageshow", function (event) {
+// Force reload on back navigation
+window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
-      window.location.reload();
+        window.location.reload();
     }
-  });
+});

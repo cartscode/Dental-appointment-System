@@ -2,12 +2,11 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "dental_db";
+$dbname = "dental_db";
 
-$conn = mysqli_connect($servername, $username, $password, $database);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-// echo "Database connected successfully";
 ?>

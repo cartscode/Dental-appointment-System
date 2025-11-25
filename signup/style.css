@@ -221,7 +221,7 @@ header {
 .form-group {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group input,
@@ -249,7 +249,7 @@ header {
 }
 
 .gender {
-  margin: 15px 0;
+  margin: 15px 0 30px 0;
   color: #333;
 }
 
@@ -278,6 +278,12 @@ header {
   color: #007BFF;
   text-decoration: none;
 }
+
+.terms-consent {
+    /* If you added this based on my previous suggestion, make sure it has good space */
+    margin: 20px 0 10px 0; /* Space above button, tight below */
+}
+
 /* ===============================
    MOBILE RESPONSIVE DESIGN
    =============================== */

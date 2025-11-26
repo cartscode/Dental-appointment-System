@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <button type="submit" name="signup">SIGN UP</button>
 
   <p class="signup-text">
-    Already have an account? <a href="adminlogin.php">LOGIN</a>
+    Already have an account? <a href="/Project%20in%20IS104/admin/Adminlogin.html">LOGIN</a>
   </p>
 </form>
 

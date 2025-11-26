@@ -1,20 +1,24 @@
 <?php
-include('config.php');
+include('config.php'); 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if (isset($_POST['signup'])) {
-    $name = $_POST['name'];f
-    $number = $_POST['number'];
-    $email = $_POST['email'];
-    $emergency = $_POST['emergency'];
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $month = $_POST['month'];
-    $day = $_POST['day'];
-    $year = $_POST['year'];
-    $gender = $_POST['gender'];
+    $first_name = $_POST['firstname'];
+    $last_name = $_POST['lastname'];
+    $username = $_POST['username']; // <-- added
+    $email = $_POST['email']; 
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+    $birth_month = $_POST['month'];
+    $birth_day = $_POST['day'];
+    $birth_year = $_POST['year'];
+    $gender = $_POST['gender'];          
+    $terms_accepted = isset($_POST['terms']) ? 1 : 0; // checkbox
 
-    $sql = "INSERT INTO users (name, number, email, emergency_contact, username, password, birth_month, birth_day, birth_year, gender)
-            VALUES ('$name', '$number', '$email', '$emergency', '$username', '$password', '$month', '$day', '$year', '$gender')";
+    // Insert data into database
+    $sql = "INSERT INTO users (first_name, last_name, username, birth_month, birth_day, birth_year, gender, email, password, terms_accepted)
+            VALUES ('$first_name', '$last_name', '$username', '$birth_month', '$birth_day', '$birth_year', '$gender', '$email', '$password', $terms_accepted)";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('Signup successful!'); window.location.href='/Project in IS104/Login/login.html';</script>";
@@ -22,4 +26,5 @@ if (isset($_POST['signup'])) {
         echo "Error: " . mysqli_error($conn);
     }
 }
+
 ?>

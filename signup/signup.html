@@ -49,17 +49,17 @@
       <h2>Sign up</h2>
       <form action="signup.php" method="POST">
         <div class="form-group">
-          <input type="text" name="name" placeholder="Enter your name" required />
-          <input type="text" name="number" placeholder="Enter your number" required />
+          <input type="text" name="firstname" placeholder="Enter your first name" required />
+          <input type="text" name="lastname" placeholder="Enter your last name" required />
         </div>
 
         <div class="form-group">
-          <input type="email" name="email" placeholder="Enter your email" required />
-          <input type="text" name="emergency" placeholder="Enter your emergency contact" required />
-        </div>
-
-        <div class="form-group">
+          <input type="email" name="email" placeholder="Enter your email" required />          
           <input type="text" name="username" placeholder="Enter your username" required />
+
+        </div>
+
+        <div class="form-group">
           <input type="password" name="password" placeholder="Enter your password" required />
         </div>
 
@@ -101,6 +101,12 @@
 
         <button type="submit" name="signup" class="signup-btn">SIGN UP</button>
         <p class="signin-link">Already have   an account? <a href="\Project in IS104\Login\login.html">SIGN IN</a></p>
+
+        <div class="terms-consent">
+      <input type="checkbox" id="terms" name="terms" required>
+      <label for="terms">I agree to the <a href="termsandconditions.html" target="_blank">Terms and Conditions</a> and Privacy Policy.</label>
+        </div>
+        
       </form>
     </section>
   </main>

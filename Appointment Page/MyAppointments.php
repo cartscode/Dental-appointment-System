@@ -85,7 +85,7 @@ $can_book_new = ($appt === null);
   <!-- ===== MAIN CONTENT ===== -->
   <section class="main-content">
     <div class="welcome-container">
-      <h1 class="welcome-title">Welcome, <?php echo htmlspecialchars($user['name']); ?>!</h1>
+      <h1 class="welcome-title">Welcome, <?php echo htmlspecialchars($user['first_name']); ?>!</h1>
       <p class="subtitle">Here’s your appointment summary and quick booking access.</p>
 
       <div class="dashboard-grid">

@@ -21,10 +21,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Retrieve logged-in user data
-    $user_id = $_SESSION['user_id'];
-    $name    = $_SESSION['name'];
-    $email   = $_SESSION['email'];
+    $user_id    = $_SESSION['user_id'];
+    
+    $first_name = $_SESSION['first_name']; 
+    $last_name  = $_SESSION['last_name'];  
+    $email      = $_SESSION['email'] ?? '';
 
+    // ⬇️ FIX 2: Define $full_name for use in the email body
+    $full_name = trim($first_name . ' ' . $last_name);
+    if (empty($full_name)) {
+        $full_name = "User"; // Fallback name if both are empty
+    }
+    // ... (rest of the form data retrieval is fine)
+    
     // Form data
     $service = $_POST['service'] ?? ''; 
     $date    = $_POST['date'] ?? '';    
@@ -48,13 +57,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_close($check_stmt);
 
     // 2️⃣ Insert appointment
-    $sql = "INSERT INTO appointments (user_id, name, email, service_name, appointment_date, appointment_time)
-            VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO appointments (user_id, first_name, last_name, email, service_name, appointment_date, appointment_time)
+             VALUES (?, ?, ?, ?, ?, ?, ?)"; // 7 placeholders
+
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
 
-        mysqli_stmt_bind_param($stmt, "isssss", $user_id, $name, $email, $service, $date, $time);
+        // Bind first_name and last_name (7 variables, 7 types)
+        mysqli_stmt_bind_param($stmt, "issssss", 
+            $user_id, 
+            $first_name, // Should now contain the value or an empty string
+            $last_name,  // Should now contain the value or an empty string
+            $email, 
+            $service, 
+            $date, 
+            $time
+        );
 
         if (mysqli_stmt_execute($stmt)) {
 
@@ -73,13 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Email details
                 $mail->setFrom('Healthcare.plus12300@gmail.com', 'Dental Clinic');
-                $mail->addAddress($email, $name);
+                $mail->addAddress($email, $full_name); 
 
                 $mail->isHTML(true);
                 $mail->Subject = "Appointment Confirmation — Dental+";
                 $mail->Body = "
                     <h2>Appointment Confirmed</h2>
-                    <p>Hi <b>$name</b>,</p>
+                    <p>Hi <b>$full_name</b>,</p>
                     <p>Your appointment has been booked successfully.</p>
                     <p><b>Service:</b> $service<br>
                     <b>Date:</b> $date<br>

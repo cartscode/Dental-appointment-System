@@ -301,24 +301,25 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_email_sent)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['recipient_email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['subject']); ?></td>
-                            <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
-                            <td><?php echo htmlspecialchars($row['status']); ?></td>
-                            <td><?php echo date('m/d/Y h:i A', strtotime($row['sent_at'])); ?></td>
-                            <td>
-                                <a href="delete_email.php?id=<?php echo $row['id']; ?>" 
-                                   class="action-btn delete-btn"
-                                   onclick="return confirm('Delete this email record?');">
-                                   <i></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
+        <tbody>
+    <?php while ($row = mysqli_fetch_assoc($result_email_sent)): ?>
+    <tr>
+        <td><?php echo htmlspecialchars($row['recipient_email']); ?></td>
+        <td><?php echo htmlspecialchars($row['subject']); ?></td>
+        <td><?php echo html_entity_decode($row['message']); ?></td>
+        <td><?php echo htmlspecialchars($row['status']); ?></td>
+        <td><?php echo date('m/d/Y h:i A', strtotime($row['sent_at'])); ?></td>
+        <td>
+            <a href="delete_email.php?id=<?php echo $row['id']; ?>" 
+               class="action-btn delete-btn"
+               onclick="return confirm('Delete this email record?');">
+               <i></i> Delete
+            </a>
+        </td>
+    </tr>
+    <?php endwhile; ?>
+    </tbody>
+
                 </table>
             </div>
 

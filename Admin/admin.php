@@ -17,7 +17,7 @@ $today_date = date('Y-m-d');
 
 // --- Schedule for Today ---
 $sql_today = "
-    SELECT id, name, email, service_name, appointment_date, appointment_time, status 
+    SELECT id, first_name, last_name, email, service_name, appointment_date, appointment_time, status 
     FROM appointments 
     WHERE appointment_date = ?
       AND status = 'Pending'
@@ -30,22 +30,28 @@ $result_today = mysqli_stmt_get_result($stmt_today);
 $today_count = mysqli_num_rows($result_today);
 
 // --- Patients Schedule ---
-$sql_all_appointments = "SELECT id, name, email, service_name, appointment_date, status 
-                         FROM appointments 
-                         ORDER BY appointment_date DESC, appointment_time DESC";
+$sql_all_appointments = "
+    SELECT id, first_name, last_name, email, service_name, appointment_date, status 
+    FROM appointments 
+    ORDER BY appointment_date DESC, appointment_time DESC
+";
 $result_all_appointments = mysqli_query($conn, $sql_all_appointments);
 
 // --- User Accounts ---
-$sql_users = "SELECT id, name, number, email, emergency_contact, birth_month, birth_day, birth_year, gender 
-              FROM users 
-              ORDER BY id DESC";
+$sql_users = "
+    SELECT id, first_name, last_name, number, email, emergency_contact, birth_month, birth_day, birth_year, gender 
+    FROM users 
+    ORDER BY id DESC
+";
 $result_users = mysqli_query($conn, $sql_users);
 
 // --- Missed Appointments ---
-$sql_missed = "SELECT id, name, email, service_name, appointment_date, appointment_time
-               FROM appointments 
-               WHERE status = 'Missed' 
-               ORDER BY appointment_date DESC, appointment_time DESC";
+$sql_missed = "
+    SELECT id, first_name, last_name, email, service_name, appointment_date, appointment_time
+    FROM appointments 
+    WHERE status = 'Missed' 
+    ORDER BY appointment_date DESC, appointment_time DESC
+";
 $result_missed = mysqli_query($conn, $sql_missed);
 $missed_count = mysqli_num_rows($result_missed);
 
@@ -114,7 +120,7 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($result_today)): ?>
                         <tr data-appointment-id="<?php echo $row['id']; ?>">
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
                             <td><?php echo htmlspecialchars($row['service_name']); ?></td> 
                             <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
@@ -150,7 +156,7 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($result_all_appointments)): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
                             <td><?php echo htmlspecialchars($row['service_name']); ?></td>
                             <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
@@ -180,7 +186,7 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($result_missed)): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
                             <td><?php echo htmlspecialchars($row['service_name']); ?></td>
                             <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
@@ -220,7 +226,7 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                         <?php while ($row = mysqli_fetch_assoc($result_users)): ?>
                         <tr>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                             <td><?php echo htmlspecialchars($row['number']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
                             <td><?php echo htmlspecialchars($row['emergency_contact']); ?></td>

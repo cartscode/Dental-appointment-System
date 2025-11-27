@@ -1,330 +1,84 @@
 <?php
 // ====================================================================
-// 0. SESSION AND SECURITY CHECK
+// SEND EMAIL REMINDERS AND LOG TO DATABASE
 // ====================================================================
-session_start();
-// if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
-//     header("Location: admin_login.php");
-//     exit;
-// }
 
-// ====================================================================
-// 1. DATABASE CONNECTION AND DATA FETCHING LOGIC
-// ====================================================================
-require_once 'db_connect.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
+require 'db_connect.php';
 
-$today_date = date('Y-m-d');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-// --- Schedule for Today ---
-$sql_today = "
-    SELECT id, first_name, last_name, email, service_name, appointment_date, appointment_time, status 
-    FROM appointments 
-    WHERE appointment_date = ?
-      AND status = 'Pending'
-    ORDER BY appointment_time ASC
-";
-$stmt_today = mysqli_prepare($conn, $sql_today);
-mysqli_stmt_bind_param($stmt_today, "s", $today_date);
-mysqli_stmt_execute($stmt_today);
-$result_today = mysqli_stmt_get_result($stmt_today);
-$today_count = mysqli_num_rows($result_today);
+// Target date: 2 days from today
+$targetDate = date('Y-m-d', strtotime('+2 days'));
 
-// --- Patients Schedule ---
-$sql_all_appointments = "
-    SELECT id, first_name, last_name, email, service_name, appointment_date, status 
-    FROM appointments 
-    ORDER BY appointment_date DESC, appointment_time DESC
-";
-$result_all_appointments = mysqli_query($conn, $sql_all_appointments);
+// Fetch pending appointments for that date
+$sql = "SELECT * FROM appointments WHERE appointment_date = ? AND LOWER(status) = 'pending'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $targetDate);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// --- User Accounts ---
-$sql_users = "
-    SELECT id, first_name, last_name, number, email, emergency_contact, birth_month, birth_day, birth_year, gender 
-    FROM users 
-    ORDER BY id DESC
-";
-$result_users = mysqli_query($conn, $sql_users);
+while ($row = $result->fetch_assoc()) {
 
-// --- Missed Appointments ---
-$sql_missed = "
-    SELECT id, first_name, last_name, email, service_name, appointment_date, appointment_time
-    FROM appointments 
-    WHERE status = 'Missed' 
-    ORDER BY appointment_date DESC, appointment_time DESC
-";
-$result_missed = mysqli_query($conn, $sql_missed);
-$missed_count = mysqli_num_rows($result_missed);
+    $email = $row['email'];
 
-// --- Contact Messages ---
-$sql_messages = "SELECT * FROM contacts ORDER BY submission_date DESC";
-$result_messages = mysqli_query($conn, $sql_messages);
+    // Build full name
+    $first = $row['first_name'] ?? '';
+    $last = $row['last_name'] ?? '';
+    $name = trim($first . ' ' . $last);
+    if ($name === '') $name = "Patient"; // Fallback to avoid blank name
 
-// --- Email Sent Records ---
-$sql_email_sent = "SELECT * FROM email_sent_records ORDER BY sent_at DESC";
-$result_email_sent = mysqli_query($conn, $sql_email_sent);
-$email_sent_count = mysqli_num_rows($result_email_sent);
+    $date = date('m/d/Y', strtotime($row['appointment_date']));
+    $time = date('h:i A', strtotime($row['appointment_time']));
+    $subject = "Appointment Reminder";
 
+    $body = "
+        <h3>Hi $name,</h3>
+        <p>This is a reminder that you have an appointment scheduled on:</p>
+        <p><b>$date at $time</b></p>
+        <p>Thank you and see you soon!</p>
+    ";
+
+    $mail = new PHPMailer(true);
+    $status = 'Sent';
+
+    try {
+        // SMTP settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'Healthcare.plus12300@gmail.com';
+        $mail->Password = 'sivu zuwe cmbm nmew'; // Gmail App Password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        // Email details
+        $mail->setFrom('Healthcare.plus12300@gmail.com', 'Dental Clinic');
+        $mail->addAddress($email, $name);
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+
+        $mail->send();
+        echo "Email sent to: $email<br>";
+
+    } catch (Exception $e) {
+        echo "Failed to send to $email: " . $mail->ErrorInfo . "<br>";
+        $status = 'Failed';
+    }
+
+    // Log email to email_sent_records table
+    $insert_sql = "INSERT INTO email_sent_records 
+        (recipient_email, recipient_name, subject, message, sent_at, status)
+        VALUES (?, ?, ?, ?, NOW(), ?)";
+    
+    $stmt_insert = $conn->prepare($insert_sql);
+    $stmt_insert->bind_param("sssss", $email, $name, $subject, $body, $status);
+    $stmt_insert->execute();
+}
+
+echo "All emails processed.";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Dental Plus</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
-</head>
-<body>
-    <div class="header">
-        <div class="header-left">
-            <span id="realtime-clock"></span>
-            <span id="date-display" class="date-display"></span>
-        </div>
-        <div class="header-right">
-            <span class="hi-admin">Hi Admin</span>
-            <button class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
-            <button class="icon-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
-        </div>
-    </div>
-
-    <div class="main-container">
-        <aside class="sidebar">
-            <nav>
-                <a href="?view=user-accounts" class="nav-item" data-view="user-accounts"><i class="fa-solid fa-users"></i> User Accounts <span class="arrow">&rarr;</span></a>
-                <a href="?view=schedule-today" class="nav-item active" data-view="schedule-today"><i class="fa-solid fa-calendar-day"></i> Schedule for Today <span class="arrow">&rarr;</span></a> 
-                <a href="?view=patients-schedule" class="nav-item" data-view="patients-schedule"><i class="fa-solid fa-calendar"></i> Patients Schedule <span class="arrow">&rarr;</span></a>
-                <a href="?view=missed-appointments" class="nav-item" data-view="missed-appointments"><i class="fa-solid fa-calendar-times"></i> Missed Appointments (<span id="missed-count-sidebar"><?php echo $missed_count; ?></span>) <span class="arrow">&rarr;</span></a>
-                <a href="?view=patients-message" class="nav-item" data-view="patients-message"><i class="fa-solid fa-message"></i> Patient's Message <span class="arrow">&rarr;</span></a>
-                <a href="?view=email-sent-records" class="nav-item" data-view="email-sent-records"><i class="fa-solid fa-envelope"></i> Email Sent Records <span class="arrow">&rarr;</span></a>
-            </nav>
-        </aside>
-
-        <main class="content">
-
-            <!-- ===========================
-                 SCHEDULE FOR TODAY
-            ============================= -->
-            <div id="schedule-today" class="content-view active-view"> 
-                <h2><i class="fa-solid fa-calendar-day"></i> Schedule for Today (<span id="today-count"><?php echo $today_count; ?></span>)</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Service Name</th>
-                            <th>Appointment Time</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_today)): ?>
-                        <tr data-appointment-id="<?php echo $row['id']; ?>">
-                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['service_name']); ?></td> 
-                            <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
-                            <td class="status-<?php echo strtolower($row['status']); ?>"><?php echo htmlspecialchars($row['status']); ?></td>
-                            <td>
-                                <button class="action-btn done-btn" data-action="done" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-check"></i> Done</button>
-                                <button class="action-btn missed-btn" data-action="missed" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-xmark"></i> Missed</button>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===========================
-                 PATIENTS SCHEDULE
-            ============================= -->
-            <div id="patients-schedule" class="content-view">
-                <h2><i class="fa-solid fa-calendar"></i> Patients Schedule</h2>
-                <div class="table-controls">
-                    <input type="text" id="searchAppointments" class="search-input table-search" placeholder="Search by Name/Email/Service...">
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Service Name</th>
-                            <th>Appointment Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_all_appointments)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['service_name']); ?></td>
-                            <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
-                            <td class="status-<?php echo strtolower($row['status']); ?>"><?php echo htmlspecialchars($row['status']); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===========================
-                 MISSED APPOINTMENTS
-            ============================= -->
-            <div id="missed-appointments" class="content-view">
-                <h2><i class="fa-solid fa-calendar-times"></i> Missed Appointments List (<span id="missed-count-display"><?php echo $missed_count; ?></span>)</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Service Name</th>
-                            <th>Appointment Date</th>
-                            <th>Appointment Time</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_missed)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['service_name']); ?></td>
-                            <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
-                            <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
-                            <td>
-                                <a href="delete_appointment.php?id=<?php echo $row['id']; ?>" 
-                                   class="action-btn delete-btn"
-                                   onclick="return confirm('Delete this missed appointment?');">
-                                   <i class="fas fa-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===========================
-                 USER ACCOUNTS
-            ============================= -->
-            <div id="user-accounts" class="content-view">
-                <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID No:</th>
-                            <th>Name</th>
-                            <th>Number</th>
-                            <th>Email</th>
-                            <th>Emergency No.</th>
-                            <th>Birthday</th>
-                            <th>Gender</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_users)): ?>
-                        <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['number']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['emergency_contact']); ?></td>
-                            <td>
-                                <?php 
-                                if ($row['birth_month'] && $row['birth_day'] && $row['birth_year']) {
-                                    echo $row['birth_month'] . '/' . $row['birth_day'] . '/' . $row['birth_year'];
-                                } else {
-                                    echo "N/A";
-                                }
-                                ?>
-                            </td>
-                            <td><?php echo htmlspecialchars($row['gender']); ?></td>
-                            <td>
-                                <button class="action-btn edit-btn" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-edit"></i> Edit</button>
-                                <button class="action-btn delete-btn" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===========================
-                 PATIENT'S MESSAGE
-            ============================= -->
-            <div id="patients-message" class="content-view">
-                <h2><i class="fa-solid fa-message"></i> Patient's Message</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Message</th>
-                            <th>Date Received</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_messages)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
-                            <td><?php echo date("m/d/Y h:i A", strtotime($row['submission_date'])); ?></td>
-                            <td>
-                                <a href="delete_message.php?id=<?php echo $row['id']; ?>" 
-                                   onclick="return confirm('Delete this message?');"
-                                   class="action-btn delete-btn">
-                                    <i class="fa-solid fa-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- ===========================
-                 EMAIL SENT RECORDS
-            ============================= -->
-            <div id="email-sent-records" class="content-view">
-                <h2><i class="fa-solid fa-envelope"></i> Email Sent Records (<span id="email-sent-count"><?php echo $email_sent_count; ?></span>)</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Recipient Email</th>
-                            <th>Subject</th>
-                            <th>Message</th>
-                            <th>Status</th>
-                            <th>Sent At</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_email_sent)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['recipient_email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['subject']); ?></td>
-                            <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
-                            <td><?php echo htmlspecialchars($row['status']); ?></td>
-                            <td><?php echo date('m/d/Y h:i A', strtotime($row['sent_at'])); ?></td>
-                            <td>
-                                <a href="delete_email.php?id=<?php echo $row['id']; ?>" 
-                                   class="action-btn delete-btn"
-                                   onclick="return confirm('Delete this email record?');">
-                                   <i class="fa-solid fa-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-
-        </main>
-    </div>
-
-<script src="script.js"></script>
-</body>
-</html>

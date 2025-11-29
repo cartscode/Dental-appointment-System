@@ -1,28 +1,31 @@
 <?php
+// cancel_appointment.php
 include('config.php');
 session_start();
 
+// Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /Project in IS104/Login/login.php");
+    header("Location: /Project in IS104/Login/login.html");
     exit();
 }
 
-// Get the appointment ID from the URL
 if (isset($_GET['id'])) {
-    $appt_id = intval($_GET['id']); // secure way to get numeric ID
+    $appointment_id = $_GET['id'];
     $user_id = $_SESSION['user_id'];
 
-    // Delete only the user's own appointment
-    $query = "DELETE FROM appointments WHERE id = '$appt_id' AND user_id = '$user_id'";
-    $result = mysqli_query($conn, $query);
+    // Update appointment status
+    $sql = "UPDATE appointments 
+            SET status = 'Cancelled' 
+            WHERE id = '$appointment_id' 
+            AND user_id = '$user_id'"; // security: cannot cancel others' appts";
 
-    if ($result) {
-        echo "<script>alert('Appointment canceled successfully!'); window.location.href='/Project in IS104/Appointment Page/MyAppointments.php';</script>";
-    } else {
-        echo "<script>alert('Failed to cancel the appointment. Please try again.'); window.location.href='/Project in IS104/Appointment Page/MyAppointments.php';</script>";
-    }
+    mysqli_query($conn, $sql);
+
+    // Redirect back with message
+    header("Location: MyAppointments.php?cancel=success");
+    exit();
 } else {
-    header("Location: /Project in IS104/Appointment Page/MyAppointments.php");
+    header("Location: MyAppointments.php?cancel=invalid");
     exit();
 }
 ?>

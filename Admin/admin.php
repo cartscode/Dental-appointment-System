@@ -64,6 +64,16 @@ $sql_email_sent = "SELECT * FROM email_sent_records ORDER BY sent_at DESC";
 $result_email_sent = mysqli_query($conn, $sql_email_sent);
 $email_sent_count = mysqli_num_rows($result_email_sent);
 
+// --- Cancelled Appointments ---
+$sql_cancelled = "
+    SELECT id, first_name, last_name, email, service_name, appointment_date, appointment_time
+    FROM appointments 
+    WHERE status = 'Cancelled' 
+    ORDER BY appointment_date DESC, appointment_time DESC
+";
+$result_cancelled = mysqli_query($conn, $sql_cancelled);
+$cancelled_count = mysqli_num_rows($result_cancelled);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +104,7 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                 <a href="?view=schedule-today" class="nav-item active" data-view="schedule-today"><i class="fa-solid fa-calendar-day"></i> Schedule for Today <span class="arrow">&rarr;</span></a> 
                 <a href="?view=patients-schedule" class="nav-item" data-view="patients-schedule"><i class="fa-solid fa-calendar"></i> Patients Schedule <span class="arrow">&rarr;</span></a>
                 <a href="?view=missed-appointments" class="nav-item" data-view="missed-appointments"><i class="fa-solid fa-calendar-times"></i> Missed Appointments (<span id="missed-count-sidebar"><?php echo $missed_count; ?></span>) <span class="arrow">&rarr;</span></a>
+                <a href="?view=cancelled-appointments" class="nav-item" data-view="cancelled-appointments"><i class="fa-solid fa-ban"></i> Cancelled Appointments (<span><?php echo $cancelled_count; ?></span>) <span class="arrow">&rarr;</span></a>
                 <a href="?view=patients-message" class="nav-item" data-view="patients-message"><i class="fa-solid fa-message"></i> Patient's Message <span class="arrow">&rarr;</span></a>
                 <a href="?view=email-sent-records" class="nav-item" data-view="email-sent-records"><i class="fa-solid fa-envelope"></i> Email Sent Records <span class="arrow">&rarr;</span></a>
             </nav>
@@ -203,6 +214,37 @@ $email_sent_count = mysqli_num_rows($result_email_sent);
                     </tbody>
                 </table>
             </div>
+<!-- ===========================
+     CANCELLED APPOINTMENTS
+============================= -->
+<div id="cancelled-appointments" class="content-view">
+    <h2><i class="fa-solid fa-ban"></i> Cancelled Appointments (<?php echo $cancelled_count; ?>)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Service Name</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Penalty</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row = mysqli_fetch_assoc($result_cancelled)): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
+                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                <td><?php echo htmlspecialchars($row['service_name']); ?></td>
+                <td><?php echo date('m/d/Y', strtotime($row['appointment_date'])); ?></td>
+                <td><?php echo date('h:i A', strtotime($row['appointment_time'])); ?></td>
+                <td><span class="status-cancelled">Penalty Applied</span></td>
+            </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 
             <!-- ===========================
                  USER ACCOUNTS

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: /Project in IS104/Admin/admin.php");
             exit();
         } else {
-            echo "<script>alert('Incorrect password!'); window.location.href='/Project in IS104/IS104/Admin/adminlogin.html';</script>";
+            echo "<script>alert('Incorrect password!'); window.location.href='/Project in IS104/IS104/Admin/admin_login.html';</script>";
         }
     } else {
         echo "<script>alert('Username not found!'); window.location.href='/Project in IS104/Admin/Adminlogin.html';</script>";

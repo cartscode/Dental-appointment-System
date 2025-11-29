@@ -92,22 +92,31 @@ CREATE TABLE missed_appointments (
 );
 
 no changes
-CREATE TABLE admin (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    fullname VARCHAR(150),
-    email VARCHAR(150),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP this is a database);
+  CREATE TABLE admin (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      username VARCHAR(100) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      fullname VARCHAR(150),
+      email VARCHAR(150),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP this is a database
+      );
+  CREATE TABLE contacts (
+      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      message TEXT NOT NULL,
+      submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
-CREATE TABLE contacts (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    message TEXT NOT NULL,
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE email_sent_records (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    recipient_email VARCHAR(150) NOT NULL,
+    recipient_name VARCHAR(150),
+    subject VARCHAR(255),
+    message TEXT,
+    status VARCHAR(50),
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 
 INSERT INTO missed_appointments (user_id, name, email, service_name, appointment_date, appointment_time)
 SELECT user_id, name, email, service_name, appointment_date, appointment_time

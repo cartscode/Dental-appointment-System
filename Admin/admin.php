@@ -39,7 +39,7 @@ $result_all_appointments = mysqli_query($conn, $sql_all_appointments);
 
 // --- User Accounts ---
 $sql_users = "
-    SELECT id, first_name, last_name, number, email, emergency_contact, birth_month, birth_day, birth_year, gender 
+    SELECT id, first_name, last_name, number, email, emergency, month, day, year, gender 
     FROM users 
     ORDER BY id DESC
 ";
@@ -258,7 +258,6 @@ $cancelled_count = mysqli_num_rows($result_cancelled);
                             <th>Name</th>
                             <th>Number</th>
                             <th>Email</th>
-                            <th>Emergency No.</th>
                             <th>Birthday</th>
                             <th>Gender</th>
                             <th>Action</th>
@@ -270,12 +269,10 @@ $cancelled_count = mysqli_num_rows($result_cancelled);
                             <td><?php echo $row['id']; ?></td>
                             <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
                             <td><?php echo htmlspecialchars($row['number']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['emergency_contact']); ?></td>
-                            <td>
+                            <td><?php echo htmlspecialchars($row['email']); ?></td>                            <td>
                                 <?php 
-                                if ($row['birth_month'] && $row['birth_day'] && $row['birth_year']) {
-                                    echo $row['birth_month'] . '/' . $row['birth_day'] . '/' . $row['birth_year'];
+                                if ($row['month'] && $row['day'] && $row['year']) {
+                                    echo $row['month'] . '/' . $row['day'] . '/' . $row['year'];
                                 } else {
                                     echo "N/A";
                                 }

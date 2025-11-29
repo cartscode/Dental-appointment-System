@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_insert->bind_param("ssss", $fullname, $email, $username, $hashed_password);
 
         if ($stmt_insert->execute()) {
-            echo "<script>alert('Admin account created successfully!'); window.location.href='adminlogin.php';</script>";
+            echo "<script>alert('Admin account created successfully!'); window.location.href='/Project%20in%20IS104/admin/Adminlogin.html';</script>";
         } else {
             // Note: If you get an error here, check your database connection or column types.
             echo "<script>alert('Error creating account: " . $conn->error . "');</script>";

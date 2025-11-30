@@ -63,42 +63,6 @@
           <input type="password" name="password" placeholder="Enter your password" required />
         </div>
 
-        <div class="form-group dob-gender">
-          <label>Date of Birth:</label>
-          <select name="month" required>
-            <option value="">Month</option>
-            <option>January</option><option>February</option><option>March</option>
-            <option>April</option><option>May</option><option>June</option>
-            <option>July</option><option>August</option><option>September</option>
-            <option>October</option><option>November</option><option>December</option>
-          </select>
-
-          <select name="day" required>
-            <option value="">Day</option>
-            <!-- Days 1–31 -->
-            <script>
-              for (let d = 1; d <= 31; d++) {
-                document.write(`<option>${d}</option>`);
-              }
-            </script>
-          </select>
-
-          <select name="year" required>
-            <option value="">Year</option>
-            <script>
-              for (let y = 2025; y >= 1980; y--) {
-                document.write(`<option>${y}</option>`);
-              }
-            </script>
-          </select>
-        </div>
-
-        <div class="gender">
-          <label>Gender:</label>
-          <label><input type="radio" name="gender" value="Male" required /> Male</label>
-          <label><input type="radio" name="gender" value="Female" required /> Female</label>
-        </div>
-
         <button type="submit" name="signup" class="signup-btn">SIGN UP</button>
         <p class="signin-link">Already have   an account? <a href="\Project in IS104\Login\login.html">SIGN IN</a></p>
 

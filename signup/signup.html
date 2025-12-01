@@ -18,7 +18,8 @@
       <div class="menu-toggle" id="menu-toggle">
         <i class="fa-solid fa-bars"></i>
       </div>
-  <ul class="nav-links" id="nav-links">
+
+      <ul class="nav-links" id="nav-links">
         <li><a href="/Project in IS104/homepage/index.html" class="active">Home</a></li>
         <li><a href="/Project in IS104/About Us/AboutUs.html">About Us</a></li>
         <li><a href="/Project in IS104/Services/services.html">Services</a></li>
@@ -29,14 +30,14 @@
         <a href="tel:+1234567891" class="phone">
           <i class="fa-solid fa-phone"></i> 1234-567-891
         </a>
-        <a href="#" class="btn">Book Appointment</a>
+        <a href="/Project in IS104/Login/login.html" class="btn">Book Appointment</a>
       </div>
     </nav>
   </header>
 
   <main class="container">
     <section class="left-section">
-      <img src="appointment.jpg" alt="Dental Appointment" class="left-img" />
+      <img src="src/dentalappointment.jpg" alt="Dental Appointment" class="left-img" />
       <div class="left-text">
         <h2>Ready to Book Your Appointment?</h2>
         <p>
@@ -75,6 +76,19 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script>
+
+// === MENU TOGGLE ===
+const toggle = document.getElementById('menu-toggle');
+const navLinks = document.getElementById('nav-links');
+const navRight = document.querySelector('.nav-right');
+
+toggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+  navRight.classList.toggle('active');
+});
+
+
+</script>
 </body>
 </html>

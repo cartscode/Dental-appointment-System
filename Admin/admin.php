@@ -90,11 +90,14 @@ $cancelled_count = mysqli_num_rows($result_cancelled);
             <span id="realtime-clock"></span>
             <span id="date-display" class="date-display"></span>
         </div>
-        <div class="header-right">
-            <span class="hi-admin">Hi Admin</span>
-            <button class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
-            <button class="icon-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
-        </div>
+      <div class="header-right">
+    <span class="hi-admin">Hi Admin</span>
+    <button class="icon-btn" title="Home"><i class="fa-solid fa-house"></i></button>
+    <a href="logout.php" class="icon-btn" title="Logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+</div>
+    
     </div>
 
     <div class="main-container">

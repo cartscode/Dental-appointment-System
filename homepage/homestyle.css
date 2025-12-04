@@ -318,6 +318,32 @@ footer {
 }
 
 /* === Chatbot Widget === */
+/* Suggested Question Bubbles */
+#chatbot-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+   position: relative;
+  z-index: 10;
+}
+
+.suggest-btn {
+  background: #e8e8e8;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.suggest-btn:hover {
+  background: #d0d0d0;
+}
+
 .chatbot-wrapper {
   position: fixed;
   bottom: 20px;
@@ -389,6 +415,8 @@ footer {
   padding: 10px;
   overflow-y: auto;
   background: #f1f9ff;
+    position: relative;
+  z-index: 1;
 }
 
 .bot-message,

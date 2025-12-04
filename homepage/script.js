@@ -26,6 +26,41 @@ const chatInput = document.getElementById("chatbot-input");
 const sendBtn = document.getElementById("chatbot-send");
 const chatMessages = document.getElementById("chatbot-messages");
 
+// ======================================================
+// ⭐ PREDEFINED SUGGESTION ANSWERS (YOUR CUSTOM REPLIES)
+// ======================================================
+const predefinedAnswers = {
+  "Toothache remedies": "For temporary toothache relief, try warm salt water, cold compress, or ibuprofen — but it's best to visit the clinic for proper examination.",
+  "Dental cleaning price": "Dental cleaning usually costs ₱800–₱1,500 depending on the procedure needed.",
+  "Clinic operating hours": "Our clinic is open Monday to Saturday, 9:00 AM to 6:00 PM.",
+  "How to book appointment?": "You can book an appointment through your Dental+ account by selecting a schedule on the Appointment page."
+};
+
+// ======================================================
+// ⭐ SUGGESTION BUTTON CLICK BEHAVIOR (AUTO SEND ANSWER)
+// ======================================================
+document.querySelectorAll(".suggest-btn").forEach(button => {
+  button.addEventListener("click", () => {
+
+    const question = button.innerText;
+    const answer = predefinedAnswers[question];
+
+    // Show user message
+    const userMsg = document.createElement("div");
+    userMsg.classList.add("user-message");
+    userMsg.textContent = question;
+    chatMessages.appendChild(userMsg);
+
+    // Show bot reply (specific answer)
+    const botMsg = document.createElement("div");
+    botMsg.classList.add("bot-message");
+    botMsg.textContent = answer || "I'm not sure about that, but feel free to ask anything dental-related!";
+    chatMessages.appendChild(botMsg);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+});
+
 // 🦷 Local Dental Clinics Database
 const dentalClinics = [
   {
@@ -68,15 +103,15 @@ If the user asks about anything not dental-related, politely say:
 
 // 🧩 Common Dental Treatment Suggestions
 const dentalTreatments = {
-  "toothache": "A toothache might be caused by decay or infection. Rinse with warm salt water, avoid very hot or cold food, and visit your dentist soon for an examination.",
-  "braces": "Braces help align crooked teeth. If you have missing teeth, you can still get braces depending on your case. It's best to consult an orthodontist for evaluation.",
-  "cleaning": "Dental cleaning removes plaque and tartar buildup. It’s recommended every 6 months to maintain gum and tooth health.",
-  "whitening": "Teeth whitening lightens discoloration. You can choose between professional in-office whitening or dentist-approved home kits.",
-  "bleeding gums": "Bleeding gums may indicate gingivitis. Brush gently, floss daily, and schedule a professional cleaning soon.",
-  "missing teeth": "If you have missing teeth, options include dental implants, bridges, or dentures. An orthodontist can plan braces with replacements if needed."
+  "toothache": "A toothache might be caused by decay or infection. Rinse with warm salt water, avoid very hot or cold food, and visit your dentist soon.",
+  "braces": "Braces help align teeth. Even with missing teeth you can still get braces depending on evaluation.",
+  "cleaning": "Dental cleaning removes plaque and tartar. Recommended every 6 months.",
+  "whitening": "Teeth whitening lightens discoloration. Choose between in-office whitening or dentist-approved kits.",
+  "bleeding gums": "Bleeding gums may indicate gingivitis. Brush gently, floss daily, and schedule a cleaning.",
+  "missing teeth": "Missing teeth options include implants, bridges, or dentures."
 };
 
-// 🗺️ Function to Get User Location
+// 🗺️ Get User Location
 function getUserLocation(callback) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -88,12 +123,12 @@ function getUserLocation(callback) {
   }
 }
 
-// === SEND BUTTON FUNCTIONALITY ===
+// 📨 SEND BUTTON LOGIC
 sendBtn.addEventListener("click", async () => {
   const message = chatInput.value.trim();
   if (message === "") return;
 
-  // Display user message
+  // Show user message
   const userMsg = document.createElement("div");
   userMsg.classList.add("user-message");
   userMsg.textContent = message;
@@ -110,7 +145,7 @@ sendBtn.addEventListener("click", async () => {
 
   const lowerMsg = message.toLowerCase();
 
-  // === Detect user asking about dental clinics ===
+  // === Nearest Dentist Detection ===
   if (
     lowerMsg.includes("nearest dentist") ||
     lowerMsg.includes("dental clinic") ||
@@ -118,9 +153,7 @@ sendBtn.addEventListener("click", async () => {
   ) {
     getUserLocation((lat, lng) => {
       if (!lat || !lng) {
-        botMsg.textContent =
-          "⚠️ I can’t access your location right now. Please enable GPS or allow location access.";
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        botMsg.textContent = "⚠️ I can’t access your location. Please enable GPS.";
         return;
       }
 
@@ -131,6 +164,7 @@ sendBtn.addEventListener("click", async () => {
         const distance = Math.sqrt(
           Math.pow(lat - clinic.lat, 2) + Math.pow(lng - clinic.lng, 2)
         );
+
         if (distance < minDistance) {
           minDistance = distance;
           nearest = clinic;
@@ -146,26 +180,23 @@ sendBtn.addEventListener("click", async () => {
 📞 ${nearest.contact}<br><br>
 <a href="${mapLink}" target="_blank">🗺️ View on Map</a>`;
       } else {
-        botMsg.textContent = "Sorry, I couldn’t find any nearby dental clinics.";
+        botMsg.textContent = "No nearby clinics found.";
       }
-
-      chatMessages.scrollTop = chatMessages.scrollHeight;
     });
     return;
   }
 
-  // === Detect Dental Treatment Questions ===
+  // === Dental Treatment Keyword Matching ===
   const foundKeyword = Object.keys(dentalTreatments).find(keyword =>
     lowerMsg.includes(keyword)
   );
 
   if (foundKeyword) {
     botMsg.textContent = dentalTreatments[foundKeyword];
-    chatMessages.scrollTop = chatMessages.scrollHeight;
     return;
   }
 
-  // === Otherwise: Send to Gemini API with one-sentence rule ===
+  // === Gemini API (Fallback) ===
   try {
     const res = await fetch("/Project in IS104/homepage/gemini_api.php", {
       method: "POST",
@@ -180,32 +211,23 @@ Please answer briefly in one helpful sentence related to dental care only.`
     const data = await res.json();
     let aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    // ✅ Trim and shorten to one sentence if needed
     if (aiText) {
       aiText = aiText.trim();
       if (aiText.length > 180) {
         aiText = aiText.split(".")[0] + ".";
       }
-    }
-
-    // ✅ Show Gemini or fallback to Google
-    if (aiText && aiText !== "") {
       botMsg.textContent = aiText;
     } else {
-      const query = encodeURIComponent(message);
-      const googleLink = `https://www.google.com/search?q=${query}+dental+care`;
-      botMsg.innerHTML = `I'm not sure about that one 🤔. Try checking this: <a href="${googleLink}" target="_blank">Google Search Result 🔍</a>`;
+      botMsg.textContent = "I'm not sure. You can ask anything about dental care.";
     }
   } catch (error) {
-    console.error(error);
-    const query = encodeURIComponent(message);
-    const googleLink = `https://www.google.com/search?q=${query}+dental+care`;
-    botMsg.innerHTML = `⚠️ My connection is down right now, but you can check this: <a href="${googleLink}" target="_blank">Google Search Result 🔍</a>`;
+    botMsg.textContent = "⚠️ I can't reach my server right now.";
   }
 
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
-// =====🎤 Voice Dictation Setup=====
+
+// =====🎤 Voice Dictation =====
 const voiceBtn = document.getElementById("chatbot-voice");
 const inputField = document.getElementById("chatbot-input");
 
@@ -222,13 +244,13 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   recognition.onresult = (event) => {
     const voiceText = event.results[0][0].transcript;
     inputField.value = voiceText;
-    document.getElementById("chatbot-send").click(); // Auto-send the message
+    document.getElementById("chatbot-send").click();
   };
 
   recognition.onend = () => {
     voiceBtn.classList.remove("listening");
   };
 } else {
-  voiceBtn.style.display = "none"; // Hide mic if unsupported
-  console.warn("Speech recognition not supported in this browser.");
+  voiceBtn.style.display = "none";
+  console.warn("Speech recognition not supported.");
 }

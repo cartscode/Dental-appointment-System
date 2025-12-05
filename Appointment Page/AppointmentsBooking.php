@@ -164,6 +164,5 @@ if (!isset($_SESSION['user_id'])) {
     </footer>
     
     <script src="AppointmentsBooking.js"></script>
-    
 </body>
 </html>

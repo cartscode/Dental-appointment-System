@@ -122,3 +122,14 @@ INSERT INTO missed_appointments (user_id, name, email, service_name, appointment
 SELECT user_id, name, email, service_name, appointment_date, appointment_time
 FROM appointments
 WHERE status = 'Pending' AND appointment_date < CURDATE();
+
+john01     - password
+maria02    - password
+carlos03   - password
+angela04   - password
+mark05     - password
+sophia06   - password
+david07    - password
+ella08     - password
+patrick09  - password
+hannah10   - password

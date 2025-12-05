@@ -23,6 +23,44 @@ body {
   padding-top: 80px; 
   padding-bottom: 60px; 
 }
+.profile-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-icon i {
+    font-size: 30px;
+    color: #333;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: #fff;
+    padding: 10px 0;
+    width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.dropdown-menu a {
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-menu a:hover {
+    background: #f0f0f0;
+}
 
 
 
@@ -480,4 +518,71 @@ footer {
 
 .day.disabled-day:hover {
     background-color: rgba(255, 255, 255, 0.03); /* Prevent hover effect on disabled dates */
+}
+.profile-container {
+    width: 100%;
+    padding: 40px 0;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card {
+    width: 520px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.profile-card h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subtitle {
+    margin-bottom: 25px;
+    color: #777;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.form-group textarea {
+    height: 90px;
+    resize: none;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0ca6ff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #008bd1;
 }

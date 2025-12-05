@@ -184,3 +184,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// PROFILE DROPDOWN TOGGLE
+const profileIcon = document.querySelector('.profile-icon');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+profileIcon.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!profileIcon.contains(e.target)) {
+        dropdownMenu.style.display = 'none';
+    }
+});
+

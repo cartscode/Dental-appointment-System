@@ -45,15 +45,29 @@ if (!isset($_SESSION['user_id'])) {
         <li><a href="/Project in IS104/Appointment Page/MyAppointments.php">My Appointment</a></li>
       </ul>
 
-      <div class="nav-right">
-        <div class="profile">
+      <!-- I want this part to be a clickable profile where you can edit your details and logout -->
+     <div class="nav-right">
+
+  <!-- PROFILE DROPDOWN -->
+  <div class="profile-dropdown">
+      <div class="profile-icon">
           <i class="fa-solid fa-user-circle"></i>
-        </div>
-        <a href="logout.php" class="btn logout-btn">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
       </div>
-    </div>
+
+      <div class="dropdown-menu">
+          <a href="/Project in IS104/Appointment Page/profile.php">
+              <i class="fa-solid fa-user"></i> Edit Profile
+          </a>
+          <a href="/Project in IS104/Profile/change_password.php">
+              <i class="fa-solid fa-key"></i> Change Password
+          </a>
+          <a href="logout.php">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </a>
+      </div>
+  </div>
+
+
   </nav>
 </header>
 
@@ -174,6 +188,13 @@ if (!isset($_SESSION['user_id'])) {
     menu.classList.toggle('active');      // toggle menu wrapper
     navRight.classList.toggle('active');  // toggle right section
   });
+  // PROFILE DROPDOWN TOGGLE
+const profileIcon = document.querySelector('.profile-icon');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+profileIcon.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
 </script>
 
 </body>

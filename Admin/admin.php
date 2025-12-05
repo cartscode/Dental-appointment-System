@@ -39,7 +39,7 @@ $result_all_appointments = mysqli_query($conn, $sql_all_appointments);
 
 // --- User Accounts ---
 $sql_users = "
-    SELECT id, first_name, last_name, number, email, emergency, month, day, year, gender 
+    SELECT id, first_name, last_name, email, status
     FROM users 
     ORDER BY id DESC
 ";
@@ -248,49 +248,38 @@ $cancelled_count = mysqli_num_rows($result_cancelled);
         </tbody>
     </table>
 </div>
-
-            <!-- ===========================
-                 USER ACCOUNTS
-            ============================= -->
-            <div id="user-accounts" class="content-view">
-                <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID No:</th>
-                            <th>Name</th>
-                            <th>Number</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Gender</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result_users)): ?>
-                        <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['number']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>                            <td>
-                                <?php 
-                                if ($row['month'] && $row['day'] && $row['year']) {
-                                    echo $row['month'] . '/' . $row['day'] . '/' . $row['year'];
-                                } else {
-                                    echo "N/A";
-                                }
-                                ?>
-                            </td>
-                            <td><?php echo htmlspecialchars($row['gender']); ?></td>
-                            <td>
-                                <button class="action-btn edit-btn" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-edit"></i> Edit</button>
-                                <button class="action-btn delete-btn" data-id="<?php echo $row['id']; ?>"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
+<!-- ===========================
+     USER ACCOUNTS
+============================= -->
+<div id="user-accounts" class="content-view">
+    <h2><i class="fa-solid fa-users"></i> User Accounts</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID No</th>
+                <th>Patient Name</th>
+                <th>Email</th>
+                <th>Status</th> <!-- Current status -->
+                <th>Action</th> <!-- Button to toggle -->
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row = mysqli_fetch_assoc($result_users)): ?>
+            <tr data-id="<?php echo $row['id']; ?>">
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></td>
+                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                <td class="status-cell"><?php echo ucfirst($row['status']); ?></td>
+                <td>
+                    <button class="action-btn <?php echo $row['status'] === 'active' ? 'inactive-btn' : 'active-btn'; ?>">
+                        <?php echo $row['status'] === 'active' ? 'Set Inactive' : 'Set Active'; ?>
+                    </button>
+                </td>
+            </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 
             <!-- ===========================
                  PATIENT'S MESSAGE

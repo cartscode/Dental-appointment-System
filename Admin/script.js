@@ -184,3 +184,22 @@ function filterTable(filter, table) {
         }
     }
 }
+document.querySelectorAll('#user-accounts .action-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const row = this.closest('tr');
+        const statusCell = row.querySelector('.status-cell');
+
+        // Toggle status in front-end only
+        if (statusCell.textContent.trim() === 'Active') {
+            statusCell.textContent = 'Inactive';
+            this.textContent = 'Set Active';
+            this.classList.remove('inactive-btn');
+            this.classList.add('active-btn');
+        } else {
+            statusCell.textContent = 'Active';
+            this.textContent = 'Set Inactive';
+            this.classList.remove('active-btn');
+            this.classList.add('inactive-btn');
+        }
+    });
+});

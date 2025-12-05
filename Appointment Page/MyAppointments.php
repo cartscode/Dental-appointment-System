@@ -180,7 +180,17 @@ $can_book_new = ($appt === null);
     <p class="footer-bottom">© 2025 Dental+. All Rights Reserved.</p>
   </footer>
 
-  <script src="MyAppointments.js">
-  </script>
+  <script src="MyAppointments.js"></script>
+     <script>
+  // === MENU TOGGLE ===
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu'); // ✅ matches HTML
+  const navRight = document.querySelector('.nav-right');
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');      // toggle menu wrapper
+    navRight.classList.toggle('active');  // toggle right section
+  });
+</script>
 </body>
 </html>

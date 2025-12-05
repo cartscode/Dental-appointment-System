@@ -164,5 +164,17 @@ if (!isset($_SESSION['user_id'])) {
     </footer>
     
     <script src="AppointmentsBooking.js"></script>
+   <script>
+  // === MENU TOGGLE ===
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu'); // ✅ matches HTML
+  const navRight = document.querySelector('.nav-right');
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');      // toggle menu wrapper
+    navRight.classList.toggle('active');  // toggle right section
+  });
+</script>
+
 </body>
 </html>

@@ -271,7 +271,7 @@ $cancelled_count = mysqli_num_rows($result_cancelled);
                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                 <td class="status-cell"><?php echo ucfirst($row['status']); ?></td>
                 <td>
-                    <button class="action-btn <?php echo $row['status'] === 'active' ? 'inactive-btn' : 'active-btn'; ?>">
+<button type="button" class="action-btn <?php echo $row['status'] === 'active' ? 'inactive-btn' : 'active-btn'; ?>">
                         <?php echo $row['status'] === 'active' ? 'Set Inactive' : 'Set Active'; ?>
                     </button>
                 </td>

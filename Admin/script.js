@@ -184,22 +184,38 @@ function filterTable(filter, table) {
         }
     }
 }
-document.querySelectorAll('#user-accounts .action-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const row = this.closest('tr');
-        const statusCell = row.querySelector('.status-cell');
 
-        // Toggle status in front-end only
-        if (statusCell.textContent.trim() === 'Active') {
-            statusCell.textContent = 'Inactive';
-            this.textContent = 'Set Active';
-            this.classList.remove('inactive-btn');
-            this.classList.add('active-btn');
-        } else {
-            statusCell.textContent = 'Active';
-            this.textContent = 'Set Inactive';
-            this.classList.remove('active-btn');
-            this.classList.add('inactive-btn');
-        }
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".action-btn").forEach(btn => {
+        btn.addEventListener("click", function (event) {
+            event.preventDefault(); // ← STOP page reload
+
+            const row = this.closest("tr");
+            const userId = row.getAttribute("data-id");
+            const currentStatus = row.querySelector(".status-cell").innerText.toLowerCase();
+            const newStatus = currentStatus === "active" ? "inactive" : "active";
+
+            fetch("update_user_status.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id=${userId}&status=${newStatus}`
+            })
+            .then(response => response.text())
+            .then(data => {
+
+                if (data.trim() === "success") {
+                    row.querySelector(".status-cell").innerText = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+
+                    this.innerText = newStatus === "active" ? "Set Inactive" : "Set Active";
+
+                    this.classList.toggle("active-btn");
+                    this.classList.toggle("inactive-btn");
+                } else {
+                    alert("Failed to update status.");
+                }
+            });
+        });
     });
 });
+
